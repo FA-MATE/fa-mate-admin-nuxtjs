@@ -1,13 +1,4 @@
 <template>
   <Header />
-  <div class="container">
-    <LeftMenu />
-    <slot />
-  </div>
+  <slot />
 </template>
-
-<style lang="postcss">
-.container {
-  display: flex;
-}
-</style>

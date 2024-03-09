@@ -4,6 +4,8 @@ const id = route.params.id;
 </script>
 
 <template>
-  <CategoryList />
-  <CategoryForm :id="id" />
+  <div class="flex">
+    <CategoryList />
+    <CategoryForm :id="id" />
+  </div>
 </template>
