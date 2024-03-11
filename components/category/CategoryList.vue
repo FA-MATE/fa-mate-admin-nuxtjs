@@ -1,35 +1,12 @@
-<script lang="ts">
-export default {
-  data: function() {
-    return {
-      categories: []
-    }
-  },
-  mounted() {
-    this.categories = [
-      {
-        id: 1,
-        name: 'カテゴリ1',
-        order_no: 1,
-      },
-      {
-        id: 2,
-        name: 'カテゴリ2',
-        order_no: 2,
-      }
-    ]
-  },
-};
-</script>
 <template>
-  <div class="border-r p-4">
+  <div class="p-4">
     <table>
       <caption>
         <div class="flex justify-between">
           <div class="text-2xl">カテゴリ一覧</div>
           <div>
             <NuxtLink to="/categories/new">
-              <button class="middle none center rounded-lg bg-orange-500 py-1 px-3 font-sans text-xs font-bold text-white">新規追加</button>
+              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">新規追加</button>
             </NuxtLink>
           </div>
         </div>
@@ -48,3 +25,9 @@ export default {
     </table>
   </div>
 </template>
+
+<script setup lang="ts">
+  import type { CategoryType } from "~/types";
+
+  const { categories } = defineProps<{categories: CategoryType[]}>()
+</script>

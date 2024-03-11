@@ -1,15 +1,10 @@
-<script lang="ts">
-export default {
-  props: ['id'],
-}
-</script>
-
 <template>
   <div class="p-4">
-    <p class="text-2xl">カテゴリ詳細</p>
     <div class="antialiased text-gray-900">
-      <div class="max-w-xl mx-auto divide-y md:max-w-4xl">
-        <div class="mt-8">
+      <div class="max-w-xl mx-auto md:max-w-4xl border p-4">
+        <div class="text-2xl" v-if="category.id === undefined">カテゴリ新規追加</div>
+        <div class="text-2xl" v-else>カテゴリ詳細</div>
+        <div class="mt-2">
           <div class="grid grid-cols-1 gap-6">
             <label class="block">
               <span class="text-gray-700">ID</span>
@@ -17,7 +12,7 @@ export default {
                 type="text"
                 class="mt-1 block w-full p-1 rounded-md bg-gray-100"
                 placeholder=""
-                value="1"
+                v-model="category.id"
                 readonly
               />
             </label>
@@ -27,7 +22,7 @@ export default {
                 type="email"
                 class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
                 placeholder="カテゴリ名"
-                value="カテゴリ1"
+                v-model="category.name"
               />
             </label>
             <label class="block">
@@ -35,13 +30,21 @@ export default {
               <input
                 type="number"
                 class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
-                value="1"
+                v-model="category.orderNo"
               />
             </label>
-            <label class="block flex justify-between">
-              <button class="middle none center mr-4 rounded-lg bg-red-500 py-1 px-3 font-sans text-xs font-bold text-white">削除</button>
-              <button class="middle none center mr-4 rounded-lg bg-green-500 py-1 px-3 font-sans text-xs font-bold text-white">修正</button>
-            </label>
+            <div class="flex justify-between" v-if="category.id === undefined">
+              <div></div>
+              <button class="middle none center rounded-lg bg-green-500 py-1 px-3 font-sans text-xs font-bold text-white" @click="handlePostCategory">新規追加</button>
+            </div>
+            <div class="flex justify-between" v-else>
+              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-red-500 text-red-500 hover:bg-red-500 hover:text-white" @click="handleDeleteCategory">
+                削除
+              </button>
+              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-green-500 text-green-500 hover:bg-green-500 hover:text-white" @click="handlePutCategory">
+                修正
+              </button>
+            </div>
             <!--
             <label class="block">
               <span class="text-gray-700">What type of event is it?</span>
@@ -77,7 +80,39 @@ export default {
             -->
           </div>
         </div>
+
+        <SubCategoryList :category="category" v-if="category.id != undefined" class="mt-6"/>        
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import type { CategoryType } from '~/types'
+  import { useCategoriesStore } from '~/stores/category';
+
+  const { category } = defineProps<{category: CategoryType}>();
+  const { postCategory, putCategory, deleteCategory } = useCategoriesStore()
+
+  async function handlePostCategory() {
+    if(!confirm('新規追加しますか？')) return
+
+    const newCategory = await postCategory(category)
+
+    navigateTo({ path: '/categories/' + newCategory.id });
+  }
+
+  async function handlePutCategory() {
+    if(!confirm('修正しますか？' + category.id)) return
+
+    await putCategory(category)
+  }
+
+  async function handleDeleteCategory() {
+    if(!confirm('削除しますか？')) return
+
+    await deleteCategory(category)
+
+    navigateTo({ path: '/categories' });
+  }
+</script>

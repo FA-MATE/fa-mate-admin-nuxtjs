@@ -1,0 +1,6 @@
+{
+  "vetur.experimental.templateInterpolationService": false,
+  "cSpell.words": [
+    "pinia"
+  ]
+}
