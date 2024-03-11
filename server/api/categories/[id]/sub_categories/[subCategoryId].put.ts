@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
       name: body.subCategory.name,
       orderNo: body.subCategory.orderNo,
   }
-  const response = await $fetch('https://fa-mate-admin-nuxtjs.onrender.com/admin/sub_categories/' + id, {
+  const response = await $fetch('https://fa-mate-rails.onrender.com/admin/sub_categories/' + id, {
     method: 'PUT',
     body: JSON.stringify(camelToSnakeCase({ subCategory }))
   })
