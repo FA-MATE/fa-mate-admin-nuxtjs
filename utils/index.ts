@@ -29,3 +29,10 @@ export function camelToSnakeCase(data: any): any {
   }
   return data;
 }
+
+export function mapToQueryString(hash: Object): string {
+  const keys = Object.keys(hash);
+  const queryString = keys.map((key) => key + "=" + hash[key]).join("&");
+
+  return queryString;
+}

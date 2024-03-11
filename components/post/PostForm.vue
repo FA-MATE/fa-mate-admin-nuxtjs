@@ -1,42 +1,10 @@
-<script setup lang="ts">
-import type { CategoryType, SubCategoryType } from '~/types'
-import { useCategoriesStore } from '~/stores/category';
-
-const { getCategories, postCategory, putCategory, deleteCategory } = useCategoriesStore()
-
-const { category } = defineProps<{category: CategoryType}>();
-
-async function refreshData() {
-  await getCategories()
-}
-
-async function handlePostCategory() {
-  if(!confirm('新規追加しますか？')) return
-
-  await postCategory(category)
-}
-
-async function handlePutCategory() {
-  if(!confirm('修正しますか？' + category.id)) return
-
-  await putCategory(category)
-  await refreshData()
-}
-
-async function handleDeleteCategory() {
-  if(!confirm('削除しますか？')) return
-
-  await deleteCategory(category)
-}
-</script>
-
 <template>
   <div class="p-4">
-    <p class="text-2xl" v-if="category.id === undefined">カテゴリ新規追加</p>
-    <p class="text-2xl" v-else>カテゴリ詳細</p>
     <div class="antialiased text-gray-900">
-      <div class="max-w-xl mx-auto divide-y md:max-w-4xl">
-        <div class="mt-8">
+      <div class="max-w-xl mx-auto md:max-w-4xl border p-4">
+        <div class="text-2xl text-center" v-if="post.id === undefined">投稿新規追加</div>
+        <div class="text-2xl text-center" v-else>投稿詳細</div>
+        <div class="mt-2">
           <div class="grid grid-cols-1 gap-6">
             <label class="block">
               <span class="text-gray-700">ID</span>
@@ -44,36 +12,74 @@ async function handleDeleteCategory() {
                 type="text"
                 class="mt-1 block w-full p-1 rounded-md bg-gray-100"
                 placeholder=""
-                v-model="category.id"
+                v-model="post.id"
                 readonly
               />
             </label>
             <label class="block">
-              <span class="text-gray-700">カテゴリ名</span>
+              <span class="text-gray-700">カテゴリ</span>
+              <div>
+                {{ post.categoryId }} > {{ post.subCategoryId }}
+              </div>
+            </label>
+            <label class="block">
+              <span class="text-gray-700">タイトル</span>
               <input
                 type="email"
                 class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
-                placeholder="カテゴリ名"
-                v-model="category.name"
+                placeholder="タイトル"
+                v-model="post.title"
               />
             </label>
             <label class="block">
-              <span class="text-gray-700">ソート順位</span>
+              <span class="text-gray-700">本文</span>
+              <textarea
+                class="mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0"
+                rows="3"
+                v-model="post.body"
+              ></textarea>
+            </label>
+            <label class="block">
+              <span class="text-gray-700">作成者</span>
               <input
-                type="number"
+                type="text"
                 class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
-                v-model="category.orderNo"
+                v-model="post.user.nickname"
               />
             </label>
-            <div class="flex justify-between" v-if="category.id === undefined">
+            <label class="block">
+              <span class="text-gray-700">タグ</span>
+              {{ post.tags.map((tag) => tag.id) }}
+            </label>
+            <label class="block">
+              <span class="text-gray-700">お譲り条件</span>
+              {{ post.conditions?.map((condition) => condition.id) }}
+            </label>
+            <label class="block">
+              <span class="text-gray-700">作成日時</span>
+              <input
+                type="text"
+                class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
+                v-model="post.createdAt"
+              />
+            </label>
+            <label class="block">
+              <span class="text-gray-700">修正日時</span>
+              <input
+                type="text"
+                class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
+                v-model="post.updatedAt"
+              />
+            </label>
+            <div class="flex justify-between" v-if="post.id === undefined">
               <div></div>
-              <button class="middle none center rounded-lg bg-green-500 py-1 px-3 font-sans text-xs font-bold text-white" @click="handlePostCategory">新規追加</button>
+              <button class="middle none center rounded-lg bg-green-500 py-1 px-3 font-sans text-xs font-bold text-white" @click="handlePostPost">新規追加</button>
             </div>
             <div class="flex justify-between" v-else>
-              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-red-500 text-red-500 hover:bg-red-500 hover:text-white" @click="handleDeleteCategory">
+              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-red-500 text-red-500 hover:bg-red-500 hover:text-white" @click="handleDeletePost">
                 削除
               </button>
-              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-green-500 text-green-500 hover:bg-green-500 hover:text-white" @click="handlePutCategory">
+              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-green-500 text-green-500 hover:bg-green-500 hover:text-white" @click="handlePutPost">
                 修正
               </button>
             </div>
@@ -116,3 +122,35 @@ async function handleDeleteCategory() {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import type { PostType } from '~/types'
+  import { usePostsStore } from '~/stores/post';
+
+  const { getPosts, postPost, putPost, deletePost } = usePostsStore()
+
+  const { post } = defineProps<{post: PostType}>();
+
+  async function refreshData() {
+    await getPosts()
+  }
+
+  async function handlePostPost() {
+    if(!confirm('新規追加しますか？')) return
+
+    await postPost(post)
+  }
+
+  async function handlePutPost() {
+    if(!confirm('修正しますか？' + post.id)) return
+
+    await putPost(post)
+    await refreshData()
+  }
+
+  async function handleDeletePost() {
+    if(!confirm('削除しますか？')) return
+
+    await deletePost(post)
+  }
+</script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="border-r p-4">
+  <div class="p-4">
     <table>
       <caption>
         <div class="flex justify-between">

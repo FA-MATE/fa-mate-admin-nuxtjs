@@ -1,49 +1,10 @@
-<script setup lang="ts">
-import type { SubCategoryType } from '~/types'
-import { useCategoriesStore } from '~/stores/category';
-
-const { getSubCategories, postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStore()
-
-const { subCategory } = defineProps<{subCategory: SubCategoryType}>();
-
-async function handlePostSubCategory() {
-  if(!confirm('新規追加しますか？')) return
-
-  await postSubCategory(subCategory)
-
-  navigateTo({
-    path: '/categories/' + subCategory.categoryId
-  });
-}
-
-async function handlePutSubCategory() {
-  if(!confirm('修正しますか？')) return
-  
-  await putSubCategory(subCategory)
-
-  navigateTo({
-    path: '/categories/' + subCategory.categoryId
-  });
-}
-
-async function handleDeleteSubCategory() {
-  if(!confirm('削除しますか？')) return
-
-  await deleteSubCategory(subCategory)
-
-  navigateTo({
-    path: '/categories/' + subCategory.categoryId
-  });
-}
-</script>
-
 <template>
   <div class="p-4">
-    <p class="text-2xl" v-if="subCategory.id === undefined">サブカテゴリ新規追加</p>
-    <p class="text-2xl" v-else>サブカテゴリ詳細</p>
     <div class="antialiased text-gray-900">
-      <div class="max-w-xl mx-auto divide-y md:max-w-4xl">
-        <div class="mt-8">
+      <div class="max-w-xl mx-auto md:max-w-4xl border p-4">
+        <p class="text-2xl" v-if="subCategory.id === undefined">サブカテゴリ新規追加</p>
+        <p class="text-2xl" v-else>サブカテゴリ詳細</p>
+        <div class="mt-2">
           <div class="grid grid-cols-1 gap-6">
             <label class="block">
               <span class="text-gray-700">カテゴリID</span>
@@ -100,3 +61,42 @@ async function handleDeleteSubCategory() {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+  import type { SubCategoryType } from '~/types'
+  import { useCategoriesStore } from '~/stores/category';
+
+  const { getSubCategories, postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStore()
+
+  const { subCategory } = defineProps<{subCategory: SubCategoryType}>();
+
+  async function handlePostSubCategory() {
+    if(!confirm('新規追加しますか？')) return
+
+    await postSubCategory(subCategory)
+
+    navigateTo({
+      path: '/categories/' + subCategory.categoryId
+    });
+  }
+
+  async function handlePutSubCategory() {
+    if(!confirm('修正しますか？')) return
+    
+    await putSubCategory(subCategory)
+
+    navigateTo({
+      path: '/categories/' + subCategory.categoryId
+    });
+  }
+
+  async function handleDeleteSubCategory() {
+    if(!confirm('削除しますか？')) return
+
+    await deleteSubCategory(subCategory)
+
+    navigateTo({
+      path: '/categories/' + subCategory.categoryId
+    });
+  }
+</script>

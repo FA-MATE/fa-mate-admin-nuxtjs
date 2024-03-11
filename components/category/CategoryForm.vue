@@ -1,10 +1,10 @@
 <template>
   <div class="p-4">
-    <p class="text-2xl" v-if="category.id === undefined">カテゴリ新規追加</p>
-    <p class="text-2xl" v-else>カテゴリ詳細</p>
     <div class="antialiased text-gray-900">
-      <div class="max-w-xl mx-auto divide-y md:max-w-4xl">
-        <div class="mt-8">
+      <div class="max-w-xl mx-auto md:max-w-4xl border p-4">
+        <div class="text-2xl" v-if="category.id === undefined">カテゴリ新規追加</div>
+        <div class="text-2xl" v-else>カテゴリ詳細</div>
+        <div class="mt-2">
           <div class="grid grid-cols-1 gap-6">
             <label class="block">
               <span class="text-gray-700">ID</span>
@@ -80,6 +80,8 @@
             -->
           </div>
         </div>
+
+        <SubCategoryList :category="category" v-if="category.id != undefined" class="mt-6"/>        
       </div>
     </div>
   </div>

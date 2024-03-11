@@ -2,10 +2,6 @@
 import type { CategoryType } from '~/types'
 import { useCategoriesStore } from '~/stores/category';
 
-definePageMeta({
-  layout: 'categories',
-});
-
 const route = useRoute();
 const id = route.params.id;
 
@@ -23,6 +19,5 @@ console.log("category ", category)
 <template>
   <div>
     <CategoryForm :category="category" />
-    <SubCategoryList :category="category" v-if="category.id != undefined" />
   </div>
 </template>

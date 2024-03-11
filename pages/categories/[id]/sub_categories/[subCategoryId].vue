@@ -2,10 +2,6 @@
 import type { CategoryType, SubCategoryType } from '~/types'
 import { useCategoriesStore } from '~/stores/category';
 
-definePageMeta({
-  layout: 'categories',
-});
-
 const route = useRoute();
 const id = route.params.subCategoryId;
 const categoryId = route.params.id

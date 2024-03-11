@@ -1,23 +1,3 @@
-<script setup lang="ts">
-import type { SubCategoryType } from '~/types'
-
-import { useCategoriesStore } from '~/stores/category';
-
-const { deleteSubCategory } = useCategoriesStore()
-
-const { subCategory } = defineProps<{subCategory: SubCategoryType}>();
-
-async function handleDeleteSubCategory() {
-  if(!confirm('削除しますか？')) return
-
-  await deleteSubCategory(subCategory)
-
-  navigateTo({
-    path: '/categories/' + subCategory.categoryId
-  });
-}
-</script>
-
 <template>
   <tr class="bg-white border-b">
     <td class="px-3 py-1 whitespace-nowrap text-sm font-medium text-blue-500">
@@ -32,4 +12,24 @@ async function handleDeleteSubCategory() {
     </td>
   </tr>
 </template>
-~/types
+
+<script setup lang="ts">
+  import type { SubCategoryType } from '~/types'
+
+  import { useCategoriesStore } from '~/stores/category';
+
+  const { deleteSubCategory } = useCategoriesStore()
+
+  const { subCategory } = defineProps<{subCategory: SubCategoryType}>();
+
+  async function handleDeleteSubCategory() {
+    if(!confirm('削除しますか？')) return
+
+    await deleteSubCategory(subCategory)
+
+    navigateTo({
+      path: '/categories/' + subCategory.categoryId
+    });
+  }
+</script>
+
