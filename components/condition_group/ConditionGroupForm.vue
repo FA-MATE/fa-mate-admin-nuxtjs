@@ -20,7 +20,13 @@
           </div>
         </div>
 
-        <ConditionList :conditionGroup="conditionGroup" v-if="conditionGroup.id != undefined" class="mt-6"/>        
+        <ConditionList :conditions="conditionGroup.conditions" v-if="conditionGroup.id != undefined" class="mt-6">
+          <div>
+            <NuxtLink :to="'/condition_groups/' + conditionGroup.id + '/conditions/new'">
+              <Button label="新規追加" color="green" />
+            </NuxtLink>
+          </div>
+        </ConditionList>
       </div>
     </div>
   </div>
