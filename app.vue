@@ -7,9 +7,13 @@
 <script setup lang="ts">
   import { useCategoriesStore } from '~/stores/category';
   import { useTagsStore } from '~/stores/tag';
+  import { useConditionsStore } from '~/stores/condition';
   
   const categoriesStore = useCategoriesStore()
   await useAsyncData(() => categoriesStore.getCategories())
+
+  const conditionsStore = useConditionsStore()
+  await useAsyncData(() => conditionsStore.getConditionGroups())
 
   const tagsStore = useTagsStore()
   await useAsyncData(() => tagsStore.getTagGroups())
