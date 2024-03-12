@@ -5,7 +5,7 @@
         <div class="text-2xl">サブカテゴリ一覧</div>
         <div>
           <NuxtLink :to="'/categories/' + category.id + '/sub_categories/new'">
-            <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">新規追加</button>
+            <Button label="新規追加" color="green" />
           </NuxtLink>
         </div>
       </div>
@@ -25,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
-  import type { CategoryType } from "~/types";
+  import type { CategoryType } from "~/types";;
+  import Button from '~/components/ui-part/form/Button'
 
   const { category } = defineProps<{category: CategoryType}>()
 </script>
