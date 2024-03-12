@@ -6,54 +6,17 @@
         <p class="text-2xl" v-else>サブカテゴリ詳細</p>
         <div class="mt-2">
           <div class="grid grid-cols-1 gap-6">
-            <label class="block">
-              <span class="text-gray-700">カテゴリID</span>
-              <input
-                type="text"
-                class="mt-1 block w-full p-1 rounded-md bg-gray-100"
-                placeholder=""
-                v-model="subCategory.categoryId"
-                readonly
-              />
-            </label>
-            <label class="block">
-              <span class="text-gray-700">ID</span>
-              <input
-                type="text"
-                class="mt-1 block w-full p-1 rounded-md bg-gray-100"
-                placeholder=""
-                v-model="subCategory.id"
-                readonly
-              />
-            </label>
-            <label class="block">
-              <span class="text-gray-700">サブカテゴリ名</span>
-              <input
-                type="email"
-                class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
-                placeholder="サブカテゴリ名"
-                v-model="subCategory.name"
-              />
-            </label>
-            <label class="block">
-              <span class="text-gray-700">ソート順位</span>
-              <input
-                type="number"
-                class="mt-1 block w-full p-1 rounded-md bg-white border focus:border-gray-500 focus:bg-white focus:ring-0"
-                v-model="subCategory.orderNo"
-              />
-            </label>
+            <InputTextField v-model="subCategory.id" label="ID" type="text" readonly />
+            <InputTextField v-model="subCategory.categoryId" label="カテゴリID" type="text" />
+            <InputTextField v-model="subCategory.name" label="サブカテゴリ名" type="text" />
+            <InputTextField v-model="subCategory.orderNo" label="ソート順位" type="text" />
             <div class="flex justify-between" v-if="subCategory.id === undefined">
               <div></div>
-              <button class="middle none center rounded-lg bg-green-500 py-1 px-3 font-sans text-xs font-bold text-white" @click="handlePostSubCategory">新規追加</button>
+              <Button label="新規登録" color="green" :onClick="handlePostSubCategory" />
             </div>
             <div class="flex justify-between" v-else>
-              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-red-500 text-red-500 hover:bg-red-500 hover:text-white" @click="handleDeleteSubCategory">
-                削除
-              </button>
-              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-green-500 text-green-500 hover:bg-green-500 hover:text-white" @click="handlePutSubCategory">
-                修正
-              </button>
+              <Button label="削除" color="red" :onClick="handleDeleteSubCategory" />
+              <Button label="修正" color="green" :onClick="handlePutSubCategory" />
             </div>
           </div>
         </div>
@@ -65,6 +28,8 @@
 <script setup lang="ts">
   import type { SubCategoryType } from '~/types'
   import { useCategoriesStore } from '~/stores/category';
+  import InputTextField from '~/components/ui-part/form/InputTextField'
+  import Button from '~/components/ui-part/form/Button'
 
   const { getSubCategories, postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStore()
 

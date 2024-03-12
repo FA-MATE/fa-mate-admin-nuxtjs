@@ -6,7 +6,7 @@
           <div class="text-2xl">投稿一覧</div>
           <div>
             <NuxtLink to="/posts/new">
-              <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">新規追加</button>
+              <Button label="新規登録" color="green" />
             </NuxtLink>
           </div>
         </div>
@@ -30,6 +30,7 @@
 
 <script setup lang="ts">
   import type { PostType } from "~/types";
+  import Button from '~/components/ui-part/form/Button'
 
-  const { posts } = defineProps<{posts: PostType[]}>()
+  defineProps<{posts: PostType[]}>()
 </script>

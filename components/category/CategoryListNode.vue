@@ -7,11 +7,9 @@
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ category.orderNo }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">
       <NuxtLink :to="'/posts?categoryId=' + category.id ">
-        <button class="center rounded-lg py-1 px-3 mr-1 font-sans text-xs font-bold border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white">関連投稿</button>
+        <Button label="関連投稿" color="orange" />
       </NuxtLink>
-      <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-red-500 text-red-500 hover:bg-red-500  hover:text-white" @click="handleDeleteCategory">
-        削除
-      </button>
+      <Button label="削除" color="red" :onClick="handleDeleteCategory" />
     </td>
   </tr>
 </template>
@@ -19,6 +17,7 @@
 <script setup lang="ts">
   import type { CategoryType } from '~/types'
   import { useCategoriesStore } from '~/stores/category';
+  import Button from '~/components/ui-part/form/Button'
 
   const { category } = defineProps<{category: CategoryType}>();
   const { deleteCategory } = useCategoriesStore()

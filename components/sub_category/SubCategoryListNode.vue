@@ -6,20 +6,17 @@
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ subCategory.name }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ subCategory.orderNo }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">
-      <button class="center rounded-lg py-1 px-3 font-sans text-xs font-bold border border-red-500 text-red-500 hover:bg-red-500  hover:text-white" @click="handleDeleteSubCategory">
-        削除
-      </button>
+      <Button label="削除" color="red" :onClick="handleDeleteSubCategory" />
     </td>
   </tr>
 </template>
 
 <script setup lang="ts">
   import type { SubCategoryType } from '~/types'
-
   import { useCategoriesStore } from '~/stores/category';
+  import Button from '~/components/ui-part/form/Button'
 
   const { deleteSubCategory } = useCategoriesStore()
-
   const { subCategory } = defineProps<{subCategory: SubCategoryType}>();
 
   async function handleDeleteSubCategory() {
