@@ -17,4 +17,7 @@
 
   const tagsStore = useTagsStore()
   await useAsyncData(() => tagsStore.getTagGroups())
+
+  const usersStore = useUsersStore()
+  await useAsyncData(() => usersStore.getUsers())
 </script>
