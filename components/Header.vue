@@ -11,8 +11,8 @@
               <!-- Current: "bg-gray-600 text-white rounded-md px-3 py-4 text-xs font-medium",
                    Default: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium" -->
               <NuxtLink to="/categories" class="bg-gray-600 text-white rounded-md px-3 py-4 text-xs font-medium" aria-current="page">カテゴリ管理</NuxtLink>
-              <NuxtLink to="/tags" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium">タグ管理</NuxtLink>
               <NuxtLink to="/conditions" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium">お譲り条件管理</NuxtLink>
+              <NuxtLink to="/tag_groups" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium">タグ管理</NuxtLink>
               <NuxtLink to="/posts" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium">投稿管理</NuxtLink>
               <NuxtLink to="/users" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium">ユーザ管理</NuxtLink>
             </div>
@@ -27,8 +27,8 @@
         <!-- Current: "bg-gray-900 text-white block rounded-md px-3 py-4 text-sm font-medium",
              Default: "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium" -->
         <NuxtLink to="/categories" class="bg-gray-900 text-white block rounded-md px-3 py-4 text-sm font-medium" aria-current="page">カテゴリ管理</NuxtLink>
-        <NuxtLink to="/tags" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium">タグ管理</NuxtLink>
         <NuxtLink to="/conditions" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium">お譲り条件管理</NuxtLink>
+        <NuxtLink to="/tag_groups" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium">タグ管理</NuxtLink>
         <NuxtLink to="/posts" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium">投稿管理</NuxtLink>
         <NuxtLink to="/users" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium">ユーザ管理</NuxtLink>
       </div>
