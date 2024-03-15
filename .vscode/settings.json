@@ -1,6 +1,13 @@
 {
-  "vetur.experimental.templateInterpolationService": false,
   "cSpell.words": [
     "pinia"
-  ]
+  ],
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+},
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
 }
