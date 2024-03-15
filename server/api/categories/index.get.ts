@@ -1,7 +1,9 @@
-import { snakeToCamelCase } from '~/utils/';
+import { snakeToCamelCase, mapToQueryString } from '~/utils/'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
 
-  return snakeToCamelCase(await $fetch(config.apiBase + '/admin/categories'))
+  const query = getQuery(event)
+
+  return snakeToCamelCase(await $fetch(config.apiBase + '/admin/categories?' + mapToQueryString(query)))
 })

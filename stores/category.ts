@@ -5,8 +5,8 @@ import type { CategoryType, SubCategoryType } from "~/types";
 export const useCategoriesStore = defineStore('categories', () => {
   const categoriesStore = reactive({ categories: [] as CategoryType[] })
 
-  async function getCategories() {
-    const newCategories = (await $fetch('/api/categories')) as CategoryType[];
+  async function getCategories(queryString: string) {
+    const newCategories = (await $fetch('/api/categories?' + queryString)) as CategoryType[];
 
     categoriesStore.categories = newCategories;
   }

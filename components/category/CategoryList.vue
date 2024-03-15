@@ -9,6 +9,7 @@
           </NuxtLink>
         </div>
       </div>
+      <slot />
     </caption>
     <thead class="bg-white border-b">
       <tr>

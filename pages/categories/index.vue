@@ -1,12 +1,17 @@
 <template>
   <div class="flex">
-    <CategoryList :categories="categoriesStore.categoriesStore.categories" class="mx-auto" />
+    <CategoryList :categories="data" class="mx-auto">
+      <CategoryListFilter :id="id"/>
+    </CategoryList>
   </div>
 </template>
 
 <script setup lang="ts">
-  import type { CategoryType } from '~/types'
-  import { useCategoriesStore } from '~/stores/category';
+  import { mapToQueryString, camelToSnakeCase } from '~/utils'
 
-  const categoriesStore = useCategoriesStore()
+  const route = useRoute();
+
+  const queryString = mapToQueryString(camelToSnakeCase(route.query))
+  const { data } = useFetch('/api/categories?' + queryString)
+  const { id } = route.query
 </script>
