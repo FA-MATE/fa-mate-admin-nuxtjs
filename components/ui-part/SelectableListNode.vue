@@ -14,7 +14,7 @@
     checked: boolean,
     label: string,
     item: any,
-    handleOnChangeChecked: (item: any) => void,
+    handleOnChangeChecked: (e: Event, item: any) => void,
   }>()
 
   function onChangeChecked(e: Event){
