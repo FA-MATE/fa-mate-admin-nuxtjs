@@ -18,7 +18,6 @@
     conditions: [],
     posts: [],
   }
-  console.log(id)
   const user = computed(() => 
     usersStore.users.find((user: UserType) => user.id == id) || initUser
   )

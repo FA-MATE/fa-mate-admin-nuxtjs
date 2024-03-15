@@ -6,7 +6,7 @@
     <div
       class="absolute top-0 left-0 mt-[0.5px] rounded-md"
       data-dismissible-target="chip">
-      <div role="button" class="w-5 p-1" @click="onDismiss">
+      <div role="button" class="w-5 p-1" @click="dismiss">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -25,13 +25,16 @@
 </template>
 
 <script setup lang="ts">
-  const { item, handleOnDismiss } = defineProps<{
+  const { item } = defineProps<{
     label: string,
     item: any,
-    handleOnDismiss: (item) => void
   }>()
 
-  function onDismiss() {
-    handleOnDismiss(item)
+  const emits = defineEmits<{
+    dismiss: [item: any]
+  }>()
+
+  function dismiss() {
+    emits('dismiss', item)
   }
 </script>

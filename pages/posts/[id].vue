@@ -21,7 +21,6 @@ const initPost: PostType = {
 const post = computed(() => 
   postsStore.posts.find((post: PostType) => post.id == id) || initPost
 )
-console.log("post ", post)
 </script>
 
 <template>

@@ -9,7 +9,7 @@
       <NuxtLink :to="'/posts?tagGroupId=' + tagGroup.id ">
         <Button label="関連投稿" color="orange" />
       </NuxtLink>
-      <Button label="削除" color="red" :onClick="handleDeleteTagGroup" />
+      <Button label="削除" color="red" @click="handleDeleteTagGroup" />
     </td>
   </tr>
 </template>

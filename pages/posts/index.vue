@@ -1,21 +1,17 @@
 <template>
   <div class="flex">
-    <PostList :posts="postsStore.postsStore.posts" class="mx-auto">
-      <PostListFilter />
+    <PostList :posts="data" class="mx-auto">
+      <PostListFilter :categoryId="categoryId" :subCategoryId="subCategoryId" />
     </PostList>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { usePostsStore } from '~/stores/post';
-  import type { PostType } from '~/types'
   import { mapToQueryString, camelToSnakeCase } from '~/utils'
-  import Button from '~/components/ui-part/form/Button'
 
-  const postsStore = usePostsStore()
   const route = useRoute();
 
   const queryString = mapToQueryString(camelToSnakeCase(route.query))
-
-  await useAsyncData(() => postsStore.getPosts(queryString))
+  const { data } = useFetch('/api/posts?' + queryString)
+  const { categoryId, subCategoryId } = route.query
 </script>

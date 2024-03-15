@@ -16,7 +16,6 @@ const initCondition: ConditionType = {
   orderNo: 0,
 }
 const condition = computed(() => conditionGroup.conditions?.find((condition: ConditionType) => condition.id == id) || initCondition)
-console.log(condition)
 </script>
 
 <template>

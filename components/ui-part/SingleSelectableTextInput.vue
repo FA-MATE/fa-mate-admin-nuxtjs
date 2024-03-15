@@ -1,27 +1,27 @@
 
 
 <template>
-  <div class="relative w-full flex" @click.self="handleOnFocusChanged">
+  <div class="relative w-full flex" @click.self="focusChanged">
     <div v-if="label != undefined" class="whitespace-nowrap">
       {{ label }}
     </div>
     <div class="w-full max-h-8 overflow-visible relative">
       <div class="border bg-white">
         <div class="absolute w-6 border right-0 top-0 bg-white">
-          <div @click="handleOnFocusChanged" v-if="isFocused"><IconMagnifyMinus /></div>
-          <div @click="handleOnFocusChanged" v-else><IconMagnify /></div>
+          <div @click="focusChanged" v-if="isFocused"><IconMagnifyMinus /></div>
+          <div @click="focusChanged" v-else><IconMagnify /></div>
         </div>
         <div class="flex">
           <div class="overflow-hidden flex-1">
             <div class="text-left">
-              <input type="text" v-model="searchKeyword" @keyup="handleOnChangeSearchKeyword" class="flex-1 p-1 w-full" v-if="isFocused" />
+              <input type="text" v-model="searchKeyword" @keyup="searchKeywordChanged" class="flex-1 p-1 w-full" v-if="isFocused" />
             </div>
             <div class="min-h-8 max-h-8 max-w-full overflow-visible overflow-x-scroll flex">
               <DismissibleButton 
-                :label="selectedItem.value[nameColumn]"
-                :item="selectedItem.value"
-                v-if="selectedItem?.value?.id != undefined"
-                :handleOnDismiss="onItemDismiss"
+                :label="selectedItem[nameColumn]"
+                :item="selectedItem"
+                v-if="selectedItem?.id != undefined"
+                @dismiss="itemDismiss"
                 class="m-1" />
             </div>
           </div>
@@ -29,12 +29,12 @@
       </div>
       <div class="relative bg-white overflow-auto">
         <SelectableListNode
-          :checked="selectedItem?.value?.id == item.id"
+          :checked="selectedItem?.id == item.id"
           :label="item[nameColumn]"
           v-for="item in filteredItems"
           :item="item"
           :key="item.id"
-          :handleOnChangeChecked="onItemChecked" />
+          @check-changed="itemChecked" />
       </div>
     </div>
   </div>
@@ -49,27 +49,39 @@
   const searchKeyword = ref('');
   const isFocused = ref(false);
 
-  const { selectedItem, filteredItems, items, onChangeSearchKeyword, onFocusChanged, onItemChecked, onItemDismiss, nameColumn, label } = defineProps<{
+  defineProps<{
     selectedItem: any,
     filteredItems: any,
     items: any,
-    onChangeSearchKeyword: (searchKeyword: string) => void,
-    onFocusChanged: (isFocused: boolean) => void,
-    onItemChecked: (e: Event, item: any) => void,
-    onItemDismiss: (item: any) => void,
     nameColumn: string,
     label?: string
   }>()
 
-  function handleOnChangeSearchKeyword() {
-    onChangeSearchKeyword(searchKeyword.value)
+  const emits = defineEmits<{
+    searchKeywordChanged: [searchKeyword: string]
+    focusChanged: [isFocused: boolean]
+    itemChecked: [e: Event, item: any]
+    itemDismiss: [item: any]
+  }>()
+
+  function searchKeywordChanged() {
+    emits('searchKeywordChanged', searchKeyword.value)
   }
 
-  function handleOnFocusChanged(e){
-    onFocusChanged(e.target.checked)
+  function focusChanged(e){
+    emits('focusChanged', e.target.checked)
+
     if(!e.target.checked) {
       searchKeyword.value = ''
     }
     isFocused.value = !isFocused.value
+  }
+
+  function itemDismiss(item) {
+    emits('itemDismiss', item)
+  }
+
+  function itemChecked(e, item){
+    emits('itemChecked', e, item)
   }
 </script>

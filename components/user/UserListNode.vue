@@ -5,7 +5,7 @@
     </td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ user.nickname }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">
-      <Button label="削除" color="red" :onClick="handleDeleteUser" />
+      <Button label="削除" color="red" @click="handleDeleteUser" />
     </td>
   </tr>
 </template>

@@ -1,10 +1,10 @@
-import { computed, defineComponent, h, ref } from "vue";
+import { defineComponent, h, ref } from "vue";
 import SingleSelectableTextInput from "~/components/ui-part/SingleSelectableTextInput.vue"
 
 export const useSingleSelectableTextInput = (items: any[], nameColumn: string, selectedItem: Ref) => {
   const filteredItems = ref([]);
 
-  function onChangeSearchKeyword(searchKeyword: string) {
+  function onSearchKeywordChanged(searchKeyword: string) {
     filteredItems.value = items.filter((item) => item[nameColumn].indexOf(searchKeyword) != -1);
   }
 
@@ -28,17 +28,16 @@ export const useSingleSelectableTextInput = (items: any[], nameColumn: string, s
 
   const render = () =>
     h(SingleSelectableTextInput, { 
-      selectedItem: selectedItem,
+      selectedItem: selectedItem.value,
       filteredItems: filteredItems.value,
       items,
-      onChangeSearchKeyword,
+      nameColumn,
+      onSearchKeywordChanged,
       onFocusChanged,
       onItemChecked,
       onItemDismiss,
-      nameColumn,
      });
 
   const UseSingleSelectableTextInputComponent = defineComponent({ render });
-
   return UseSingleSelectableTextInputComponent
 }

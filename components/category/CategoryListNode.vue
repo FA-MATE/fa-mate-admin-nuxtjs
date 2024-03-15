@@ -9,7 +9,7 @@
       <NuxtLink :to="'/posts?categoryId=' + category.id ">
         <Button label="関連投稿" color="orange" />
       </NuxtLink>
-      <Button label="削除" color="red" :onClick="handleDeleteCategory" />
+      <Button label="削除" color="red" @click="handleDeleteCategory" />
     </td>
   </tr>
 </template>

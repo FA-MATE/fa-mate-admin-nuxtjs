@@ -11,11 +11,11 @@
             <InputTextField v-model="tagGroup.orderNo" label="ソート順位" type="number" />
             <div class="flex justify-between" v-if="tagGroup.id === undefined">
               <div></div>
-              <Button label="新規登録" color="green" :onClick="handlePostTagGroup" />
+              <Button label="新規登録" color="green" @click="handlePostTagGroup" />
             </div>
             <div class="flex justify-between" v-else>
-              <Button label="削除" color="red" :onClick="handleDeleteTagGroup" />
-              <Button label="修正" color="green" :onClick="handlePutTagGroup" />
+              <Button label="削除" color="red" @click="handleDeleteTagGroup" />
+              <Button label="修正" color="green" @click="handlePutTagGroup" />
             </div>
           </div>
         </div>

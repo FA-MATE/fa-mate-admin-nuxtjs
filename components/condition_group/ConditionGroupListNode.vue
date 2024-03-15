@@ -9,7 +9,7 @@
       <NuxtLink :to="'/posts?conditionGroupId=' + conditionGroup.id ">
         <Button label="関連投稿" color="orange" />
       </NuxtLink>
-      <Button label="削除" color="red" :onClick="handleDeleteConditionGroup" />
+      <Button label="削除" color="red" @click="handleDeleteConditionGroup" />
     </td>
   </tr>
 </template>

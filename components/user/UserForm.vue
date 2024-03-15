@@ -11,11 +11,11 @@
             <InputTextField v-model="user.profileImageUrl" label="プロフィールイメージ" type="text" />
             <div class="flex justify-between" v-if="user.id === undefined">
               <div></div>
-              <Button label="新規登録" color="green" :onClick="handlePostUser" />
+              <Button label="新規登録" color="green" @click="handlePostUser" />
             </div>
             <div class="flex justify-between" v-else>
-              <Button label="削除" color="red" :onClick="handleDeleteUser" />
-              <Button label="修正" color="green" :onClick="handlePutUser" />
+              <Button label="削除" color="red" @click="handleDeleteUser" />
+              <Button label="修正" color="green" @click="handlePutUser" />
             </div>
           </div>
           <PostList :posts="user.posts" class="mt-6" />

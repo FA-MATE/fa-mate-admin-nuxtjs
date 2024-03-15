@@ -6,7 +6,7 @@
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ tag.name }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ tag.orderNo }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">
-      <Button label="削除" color="red" :onClick="handleDeleteTag" />
+      <Button label="削除" color="red" @click="handleDeleteTag" />
     </td>
   </tr>
 </template>

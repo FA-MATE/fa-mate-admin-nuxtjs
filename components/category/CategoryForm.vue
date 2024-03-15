@@ -11,11 +11,11 @@
             <InputTextField v-model="category.orderNo" label="ソート順位" type="number" />
             <div class="flex justify-between" v-if="category.id === undefined">
               <div></div>
-              <Button label="新規登録" color="green" :onClick="handlePostCategory" />
+              <Button label="新規登録" color="green" @click="handlePostCategory" />
             </div>
             <div class="flex justify-between" v-else>
-              <Button label="削除" color="red" :onClick="handleDeleteCategory" />
-              <Button label="修正" color="green" :onClick="handlePutCategory" />
+              <Button label="削除" color="red" @click="handleDeleteCategory" />
+              <Button label="修正" color="green" @click="handlePutCategory" />
             </div>
           </div>
         </div>

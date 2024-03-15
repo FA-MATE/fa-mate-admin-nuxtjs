@@ -26,11 +26,11 @@
             <InputTextField v-model="post.updatedAt" label="修正日時" type="text" />
             <div class="flex justify-between" v-if="post.id === undefined">
               <div></div>
-              <Button label="新規登録" color="green" :onClick="handlePostPost" />
+              <Button label="新規登録" color="green" @click="handlePostPost" />
             </div>
             <div class="flex justify-between" v-else>
-              <Button label="削除" color="red" :onClick="handleDeletePost" />
-              <Button label="修正" color="green" :onClick="handlePutPost" />
+              <Button label="削除" color="red" @click="handleDeletePost" />
+              <Button label="修正" color="green" @click="handlePutPost" />
             </div>
           </div>
         </div>

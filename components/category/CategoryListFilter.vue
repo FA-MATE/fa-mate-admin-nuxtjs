@@ -1,6 +1,6 @@
 <template>
   <CategoryFinderComponent class="z-20" label="カテゴリ"/>
-  <Button color="green" label="検索" :onClick="filterCategories"/>
+  <Button color="green" label="検索" @click="filterCategories"/>
 </template>
 
 <script setup lang="ts">
@@ -16,10 +16,10 @@
 
   const CategoryFinderComponent = useSingleSelectableTextInput(categoriesStore.categoriesStore.categories, 'name', selectedItem)
 
-  const queryStrings = []
-  if(id != undefined && id != null) queryStrings.push("id=" + id)
-
   async function filterCategories() {
+    const queryStrings = []
+    if(selectedItem.value.id != undefined && selectedItem.value.id != null) queryStrings.push("id=" + selectedItem.value.id)
+
     reloadNuxtApp ({ 
       path : "/categories?" + queryStrings.join("&"), 
       ttl : 1000,

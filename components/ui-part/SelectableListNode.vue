@@ -1,7 +1,7 @@
 <template>
   <div class="flex leading-8 border border-t-0">
     <div class="w-8 border-r">
-      <input type="checkbox" class="w-4 h-4 border-0 ring-0" :checked="checked" @change="onChangeChecked" />
+      <input type="checkbox" class="w-4 h-4 border-0 ring-0" :checked="checked" @change="onCheckChanged" />
     </div>
     <div class="pl-2">
       {{ label  }}
@@ -10,14 +10,17 @@
 </template>
 
 <script setup lang="ts">
-  const { handleOnChangeChecked, item } = defineProps<{
+  const { item } = defineProps<{
     checked: boolean,
     label: string,
     item: any,
-    handleOnChangeChecked: (e: Event, item: any) => void,
   }>()
 
-  function onChangeChecked(e: Event){
-    handleOnChangeChecked(e, item)
+  const emits = defineEmits<{
+    checkChanged: [e: Event, item: any]
+  }>()
+
+  function onCheckChanged(e: Event){
+    emits('checkChanged', e, item)
   }
 </script>

@@ -7,13 +7,13 @@
     <div class="w-full max-h-8 overflow-visible relative">
       <div class="border bg-white">
         <div class="absolute w-6 border right-0 top-0 bg-white">
-          <div @click="handleOnFocusChanged" v-if="isFocused"><IconMagnifyMinus /></div>
-          <div @click="handleOnFocusChanged" v-else><IconMagnify /></div>
+          <div @click="focusChanged" v-if="isFocused"><IconMagnifyMinus /></div>
+          <div @click="focusChanged" v-else><IconMagnify /></div>
         </div>
         <div class="flex">
           <div class="overflow-hidden">
             <div class="text-left">
-              <input type="text" v-model="searchKeyword" @keyup="handleOnChangeSearchKeyword" placeholder="キーワードを入力" class="p-1" v-if="isFocused" />
+              <input type="text" v-model="searchKeyword" @keyup="searchKeywordChanged" placeholder="キーワードを入力" class="p-1" v-if="isFocused" />
             </div>
             <div class="min-h-8 max-h-8 max-w-full overflow-visible overflow-x-scroll flex">
               <DismissibleButton 
@@ -21,7 +21,7 @@
                 v-for="item in selectedItems"
                 :item="item"
                 :key="item.id"
-                :handleOnDismiss="onItemDismiss"
+                @dismiss="itemDismiss"
                 class="m-1" />
             </div>
           </div>
@@ -34,7 +34,7 @@
           v-for="item in filteredItems"
           :item="item"
           :key="item.id"
-          :handleOnChangeChecked="onItemChecked" />
+          @check-changed="itemChecked" />
       </div>
     </div>
   </div>
@@ -49,27 +49,39 @@
   const searchKeyword = ref('');
   const isFocused = ref(false);
 
-  const { selectedItems, filteredItems, items, onChangeSearchKeyword, onFocusChanged, onItemChecked, onItemDismiss, nameColumn, label } = defineProps<{
+  defineProps<{
     selectedItems: any,
     filteredItems: any,
     items: any,
-    onChangeSearchKeyword: (searchKeyword: string) => void,
-    onFocusChanged: (isFocused: boolean) => void,
-    onItemChecked: (e: Event, item: any) => void,
-    onItemDismiss: (item: any) => void,
     nameColumn: string,
     label?: string
   }>()
 
-  function handleOnChangeSearchKeyword() {
-    onChangeSearchKeyword(searchKeyword.value)
+  const emits = defineEmits<{
+    searchKeywordChanged: [searchKeyword: string]
+    focusChanged: [isFocused: boolean]
+    itemChecked: [e: Event, item: any]
+    itemDismiss: [item: any]
+  }>()
+
+  function searchKeywordChanged() {
+    emits('searchKeywordChanged', searchKeyword.value)
   }
 
-  function handleOnFocusChanged(e){
-    onFocusChanged(e.target.checked)
+  function focusChanged(e){
+    emits('focusChanged', e.target.checked)
+
     if(!e.target.checked) {
       searchKeyword.value = ''
     }
     isFocused.value = !isFocused.value
+  }
+
+  function itemDismiss(item) {
+    emits('itemDismiss', item)
+  }
+
+  function itemChecked(e, item){
+    emits('itemChecked', e, item)
   }
 </script>

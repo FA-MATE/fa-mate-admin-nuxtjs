@@ -12,11 +12,11 @@
             <InputTextField v-model="condition.orderNo" label="ソート順位" type="text" />
             <div class="flex justify-between" v-if="condition.id === undefined">
               <div></div>
-              <Button label="新規登録" color="green" :onClick="handlePostCondition" />
+              <Button label="新規登録" color="green" @click="handlePostCondition" />
             </div>
             <div class="flex justify-between" v-else>
-              <Button label="削除" color="red" :onClick="handleDeleteCondition" />
-              <Button label="修正" color="green" :onClick="handlePutCondition" />
+              <Button label="削除" color="red" @click="handleDeleteCondition" />
+              <Button label="修正" color="green" @click="handlePutCondition" />
             </div>
           </div>
         </div>

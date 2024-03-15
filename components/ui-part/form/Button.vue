@@ -7,9 +7,15 @@
 </template>
 
 <script setup lang="ts">
-  const model = defineModel()
+  defineProps<{label: string, color: string}>();
 
-  withDefaults(defineProps<{label: string, color: string, onClick?: () => void}>(), { onClick: () => {}});
+  const emits = defineEmits<{
+    (event?: 'click'): void
+  }>()
+
+  function onClick(){
+    emits('click')
+  }
 
   const colorClasses = (name: string) => {
     return {

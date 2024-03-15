@@ -1,11 +1,10 @@
 import { computed, defineComponent, h, ref } from "vue";
 import MultiSelectableTextInput from "~/components/ui-part/MultiSelectableTextInput.vue"
 
-export const useMultiSelectableTextInput = (items: any[], nameColumn: string) => {
+export const useMultiSelectableTextInput = (items: any[], nameColumn: string, selectedItems: Ref<[]>) => {
   const filteredItems = ref([]);
-  const selectedItems = ref([]);
 
-  function onChangeSearchKeyword(searchKeyword: string) {
+  function onSearchKeywordChanged(searchKeyword: string) {
     filteredItems.value = items.filter((item) => item[nameColumn].indexOf(searchKeyword) != -1);
   }
 
@@ -32,14 +31,13 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string) =>
       selectedItems: selectedItems.value,
       filteredItems: filteredItems.value,
       items,
-      onChangeSearchKeyword,
+      nameColumn,
+      onSearchKeywordChanged,
       onFocusChanged,
       onItemChecked,
       onItemDismiss,
-      nameColumn,
      });
 
   const UseMultiSelectableTextInputComponent = defineComponent({ render });
-
-  return [selectedItems, UseMultiSelectableTextInputComponent]
+  return UseMultiSelectableTextInputComponent
 }

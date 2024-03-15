@@ -12,11 +12,11 @@
             <InputTextField v-model="tag.orderNo" label="ソート順位" type="text" />
             <div class="flex justify-between" v-if="tag.id === undefined">
               <div></div>
-              <Button label="新規登録" color="green" :onClick="handlePostTag" />
+              <Button label="新規登録" color="green" @click="handlePostTag" />
             </div>
             <div class="flex justify-between" v-else>
-              <Button label="削除" color="red" :onClick="handleDeleteTag" />
-              <Button label="修正" color="green" :onClick="handlePutTag" />
+              <Button label="削除" color="red" @click="handleDeleteTag" />
+              <Button label="修正" color="green" @click="handlePutTag" />
             </div>
           </div>
         </div>

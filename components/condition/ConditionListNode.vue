@@ -6,7 +6,7 @@
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ condition.name }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">{{ condition.orderNo }}</td>
     <td class="text-sm text-gray-900 font-light px-3 py-1 whitespace-nowrap">
-      <Button label="削除" color="red" :onClick="handleDeleteCondition" />
+      <Button label="削除" color="red" @click="handleDeleteCondition" />
     </td>
   </tr>
 </template>
