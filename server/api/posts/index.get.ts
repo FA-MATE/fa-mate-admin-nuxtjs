@@ -1,8 +1,9 @@
 import { snakeToCamelCase, mapToQueryString } from '~/utils/'
 
 export default defineEventHandler(async (event) => {
-  console.log('event ' , event)
+  const config = useRuntimeConfig()
+
   const query = getQuery(event)
   
-  return snakeToCamelCase(await $fetch('https://fa-mate-rails.onrender.com/admin/posts?' + mapToQueryString(query)))
+  return snakeToCamelCase(await $fetch(config.apiBase + '/admin/posts?' + mapToQueryString(query)))
 })
