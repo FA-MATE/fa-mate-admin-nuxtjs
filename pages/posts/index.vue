@@ -10,6 +10,7 @@
   import { usePostsStore } from '~/stores/post';
   import type { PostType } from '~/types'
   import { mapToQueryString, camelToSnakeCase } from '~/utils'
+  import Button from '~/components/ui-part/form/Button'
 
   const postsStore = usePostsStore()
   const route = useRoute();
