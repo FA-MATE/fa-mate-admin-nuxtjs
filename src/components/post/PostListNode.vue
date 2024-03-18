@@ -22,19 +22,16 @@
 import type { PostType } from '~/types'
 import { usePostsStore } from '~/stores/post'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useRouter } from 'vue-router'
 
 const { deletePost } = usePostsStore()
 
-const { post } = defineProps<{ post: PostType }>()
-
-const router = useRouter()
+const props = defineProps<{ post: PostType }>()
 
 async function handleDeletePost(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
-  await deletePost(post).then(() => {
-    router.push({ path: '/posts' })
+  await deletePost(props.post).then(() => {
+    navigateTo({ path: '/posts' })
   })
 }
 </script>

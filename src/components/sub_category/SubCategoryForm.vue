@@ -30,19 +30,16 @@ import type { SubCategoryType } from '~/types'
 import { useCategoriesStore } from '~/stores/category'
 import InputTextField from '~/components/ui-part/form/InputTextField.vue'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useRouter } from 'vue-router'
 
 const { postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStore()
 
 const subCategory = defineModel<SubCategoryType>({ required: true })
 
-const router = useRouter()
-
 async function handlePostSubCategory(): Promise<void> {
   if (!confirm('新規追加しますか？')) return
 
   await postSubCategory(subCategory.value).then(() => {
-    router.push({
+    navigateTo({
       path: '/categories/' + subCategory.value.categoryId,
     })
   })
@@ -52,7 +49,7 @@ async function handlePutSubCategory(): Promise<void> {
   if (!confirm('修正しますか？')) return
 
   await putSubCategory(subCategory.value).then(() => {
-    router.push({
+    navigateTo({
       path: '/categories/' + subCategory.value.categoryId,
     })
   })
@@ -62,7 +59,7 @@ async function handleDeleteSubCategory(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
   await deleteSubCategory(subCategory.value).then(() => {
-    router.push({
+    navigateTo({
       path: '/categories/' + subCategory.value.categoryId,
     })
   })

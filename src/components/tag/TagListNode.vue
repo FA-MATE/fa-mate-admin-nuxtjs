@@ -21,14 +21,14 @@ import { useTagsStore } from '~/stores/tag'
 import Button from '~/components/ui-part/form/Button.vue'
 
 const { deleteTag } = useTagsStore()
-const { tag } = defineProps<{ tag: TagType }>()
+const props = defineProps<{ tag: TagType }>()
 
 async function handleDeleteTag(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
-  await deleteTag(tag).then(() =>
+  await deleteTag(props.tag).then(() =>
     navigateTo({
-      path: '/tag_groups/' + tag.tagGroupId,
+      path: '/tag_groups/' + props.tag.tagGroupId,
     })
   )
 }

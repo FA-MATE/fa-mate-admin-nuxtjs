@@ -38,5 +38,5 @@
 <script setup lang="ts">
 import type { ConditionType } from '~/types'
 
-const { conditions } = defineProps<{ conditions: ConditionType[] }>()
+defineProps<{ conditions: ConditionType[] }>()
 </script>

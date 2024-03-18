@@ -24,15 +24,14 @@ import type { CategoryType } from '~/types'
 import { useCategoriesStore } from '~/stores/category'
 import Button from '~/components/ui-part/form/Button.vue'
 
-const { category } = defineProps<{ category: CategoryType }>()
+const props = defineProps<{ category: CategoryType }>()
 const { deleteCategory } = useCategoriesStore()
-
 const router = useRouter()
 
 function handleDeleteCategory(): void {
   if (!confirm('削除しますか？')) return
 
-  deleteCategory(category).then(() => {
+  deleteCategory(props.category).then(() => {
     router.push({ path: '/categories' }).then(() => router.go(0))
   })
 }

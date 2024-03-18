@@ -19,5 +19,5 @@ const initUser: UserType = {
   conditions: [],
   posts: [],
 }
-const user = computed(() => usersStore.users.find((user: UserType) => user.id?.toString() == id) || initUser)
+const user = usersStore.users.find((user: UserType) => user.id?.toString() == id) || initUser
 </script>

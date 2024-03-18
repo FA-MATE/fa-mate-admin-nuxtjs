@@ -1,5 +1,5 @@
 <template>
-  <div class="flex overflow-x-scroll">
+  <div class="flex">
     <CategoryList :categories="data || []" class="mx-auto">
       <CategoryListFilter :id="id" />
     </CategoryList>
@@ -14,5 +14,5 @@ const route = useRoute()
 
 const queryString = mapToQueryString(camelToSnakeCase(route.query))
 const { data } = useFetch('/api/categories?' + queryString)
-const { id } = route.query
+const id = route.query.id
 </script>

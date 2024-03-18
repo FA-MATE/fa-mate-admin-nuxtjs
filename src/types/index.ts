@@ -1,47 +1,47 @@
 export type SubCategoryType = {
-  id?: string
+  id?: number
   categoryId: string
   name: string
-  orderNo: string
+  orderNo: number
 }
 
 export type CategoryType = {
-  id?: string
+  id?: number
   name: string
-  orderNo: string
+  orderNo: number
   subCategories: SubCategoryType[]
 }
 
 export type TagType = {
-  id?: string
+  id?: number
   tagGroupId: string
   name: string
-  orderNo: string
+  orderNo: number
 }
 
 export type TagGroupType = {
-  id?: string
+  id?: number
   name: string
-  orderNo: string
+  orderNo: number
   tags: TagType[]
 }
 
 export type ConditionType = {
-  id?: string
+  id?: number
   conditionGroupId: string
   name: string
-  orderNo: string
+  orderNo: number
 }
 
 export type ConditionGroupType = {
-  id?: string
+  id?: number
   name: string
-  orderNo: string
+  orderNo: number
   conditions: ConditionType[]
 }
 
 export type UserType = {
-  id?: string
+  id?: number
   nickname: string
   profileImageUrl: string
   conditions: ConditionType[]
@@ -50,11 +50,11 @@ export type UserType = {
 
 export type PostImageType = {
   imageUrl: string
-  orderNo: string
+  orderNo: number
 }
 
 export type PostType = {
-  id?: string
+  id?: number
   title: string
   body: string
   categoryId: string

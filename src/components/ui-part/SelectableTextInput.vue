@@ -22,9 +22,9 @@
             </div>
             <div
               class="min-h-8 max-h-8 max-w-full overflow-visible overflow-x-scroll flex"
-              @click.self="focusChangedInputText"
-              @mouseover="inputCloseableFalse"
-              @mouseout="inputCloseableTrue"
+              @click.self="changedInputTextFocus"
+              @mouseover="inputTextCloseableFalse"
+              @mouseout="inputTextCloseableTrue"
             >
               <DismissibleButton
                 v-for="selectedItem in selectedItems"
@@ -32,20 +32,24 @@
                 :label="selectedItem[nameColumn]"
                 :item="selectedItem"
                 class="m-1"
-                @dismiss="itemDismiss"
+                @dismiss="dismissItem"
               />
             </div>
           </div>
         </div>
       </div>
-      <div class="relative bg-white overflow-auto" @mouseover="inputCloseableFalse" @mouseout="inputCloseableTrue">
+      <div
+        class="relative bg-white overflow-auto"
+        @mouseover="inputTextCloseableFalse"
+        @mouseout="inputTextCloseableTrue"
+      >
         <SelectableListNode
           v-for="item in filteredItems"
           :key="item.id"
-          :checked="selectedItems.indexOf((sItem: any) => sItem.id == item.id) != -1"
+          :selected="isSelectedItem(item)"
           :label="item[nameColumn]"
           :item="item"
-          @check-changed="itemChecked"
+          @change="changedItemSelectState"
         />
       </div>
     </div>
@@ -61,9 +65,9 @@ const isInputOpen = ref(false)
 const isInputCloseable = ref(false)
 const inputRef = ref<HTMLInputElement>()
 
-const { nameColumn } = defineProps<{
+const props = defineProps<{
   selectedItems: any[]
-  filteredItems: any
+  filteredItems: any[]
   items: any
   nameColumn: string
   label?: string
@@ -71,29 +75,29 @@ const { nameColumn } = defineProps<{
 
 const emits = defineEmits<{
   searchByKeyword: [searchKeyword: string]
-  focusChangedInputText: [isInputOpen: boolean]
-  itemChecked: [e: Event, item: any]
-  itemDismiss: [item: any]
+  changedInputTextFocus: [isInputOpen: boolean]
+  changedItemSelectState: [e: Event, item: any]
+  dismissItem: [item: any]
 }>()
 
 function searchByKeyword(): void {
   emits('searchByKeyword', searchKeyword.value)
 }
 
-function focusChangedInputText(e: any): void {
-  emits('focusChangedInputText', e.target.checked)
+function changedInputTextFocus(e: any): void {
+  emits('changedInputTextFocus', e.target.checked)
 
   isInputOpen.value = !isInputOpen.value
 }
 
-function itemDismiss(item: any): void {
-  emits('itemDismiss', item)
+function dismissItem(item: any): void {
+  emits('dismissItem', item)
 
   inputFocus()
 }
 
-function itemChecked(e: any, item: any): void {
-  emits('itemChecked', e, item)
+const changedItemSelectState = (e: any, item: any): void => {
+  emits('changedItemSelectState', e, item)
 
   inputFocus()
 }
@@ -110,18 +114,23 @@ const vFocus: { mounted: (el: HTMLInputElement) => void } = {
   },
 }
 
-const closeInputText = () => {
+const closeInputText = (): void => {
   if (isInputCloseable.value) {
-    emits('focusChangedInputText', false)
+    emits('changedInputTextFocus', false)
     isInputOpen.value = false
     isInputCloseable.value = false
   }
 }
 
-const inputCloseableTrue = (): void => {
+const inputTextCloseableFalse = (): void => {
+  isInputCloseable.value = false
+}
+
+const inputTextCloseableTrue = (): void => {
   isInputCloseable.value = true
 }
-const inputCloseableFalse = (): void => {
-  isInputCloseable.value = false
+
+const isSelectedItem = (item: any): boolean => {
+  return props.selectedItems.find((sItem: any) => sItem.id == item.id) != undefined
 }
 </script>

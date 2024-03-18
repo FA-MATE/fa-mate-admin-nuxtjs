@@ -17,16 +17,14 @@ import type { UserType } from '~/types'
 import { useUsersStore } from '~/stores/user'
 import Button from '~/components/ui-part/form/Button.vue'
 
-const router = useRouter()
-
 const { deleteUser } = useUsersStore()
-const { user } = defineProps<{ user: UserType }>()
+const props = defineProps<{ user: UserType }>()
 
 async function handleDeleteUser(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
-  await deleteUser(user).then(() => {
-    router.push({
+  await deleteUser(props.user).then(() => {
+    navigateTo({
       path: '/users',
     })
   })

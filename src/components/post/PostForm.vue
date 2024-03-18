@@ -45,19 +45,16 @@ import { usePostsStore } from '~/stores/post'
 import InputTextField from '~/components/ui-part/form/InputTextField.vue'
 import InputTextArea from '~/components/ui-part/form/InputTextArea.vue'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useRouter } from 'vue-router'
 
 const { postPost, putPost, deletePost } = usePostsStore()
 
 const post = defineModel<PostType>({ required: true })
 
-const router = useRouter()
-
 async function handlePostPost(): Promise<void> {
   if (!confirm('新規追加しますか？')) return
 
   await postPost(post.value).then((newPost: PostType) => {
-    router.push({ path: '/posts/' + newPost.id })
+    navigateTo({ path: '/posts/' + newPost.id })
   })
 }
 
@@ -71,7 +68,7 @@ async function handleDeletePost(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
   await deletePost(post.value).then(() => {
-    router.push({ path: '/posts' })
+    navigateTo({ path: '/posts' })
   })
 }
 </script>

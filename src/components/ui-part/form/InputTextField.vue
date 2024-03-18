@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel<string>()
+const model = defineModel<string | number>()
 
 withDefaults(defineProps<{ label: string; type: string; readonly?: boolean }>(), { readonly: false })
 </script>

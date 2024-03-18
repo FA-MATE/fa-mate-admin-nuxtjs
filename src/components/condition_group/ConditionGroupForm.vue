@@ -37,19 +37,16 @@ import type { ConditionGroupType } from '~/types'
 import { useConditionsStore } from '~/stores/condition'
 import InputTextField from '~/components/ui-part/form/InputTextField.vue'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useRouter } from 'vue-router'
 
 const conditionGroup = defineModel<ConditionGroupType>({ required: true })
 
 const { postConditionGroup, putConditionGroup, deleteConditionGroup } = useConditionsStore()
 
-const router = useRouter()
-
 async function handlePostConditionGroup(): Promise<void> {
   if (!confirm('新規追加しますか？')) return
 
   await postConditionGroup(conditionGroup.value).then((newConditionGroup) => {
-    router.push({ path: '/condition_groups/' + newConditionGroup.id })
+    navigateTo({ path: '/condition_groups/' + newConditionGroup.id })
   })
 }
 
@@ -63,7 +60,7 @@ async function handleDeleteConditionGroup(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
   await deleteConditionGroup(conditionGroup.value).then(() => {
-    router.push({ path: '/condition_groups' })
+    navigateTo({ path: '/condition_groups' })
   })
 }
 </script>

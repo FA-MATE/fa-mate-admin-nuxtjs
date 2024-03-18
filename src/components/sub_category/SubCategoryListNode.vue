@@ -23,14 +23,14 @@ import { useCategoriesStore } from '~/stores/category'
 import Button from '~/components/ui-part/form/Button.vue'
 
 const { deleteSubCategory } = useCategoriesStore()
-const { subCategory } = defineProps<{ subCategory: SubCategoryType }>()
+const props = defineProps<{ subCategory: SubCategoryType }>()
 
 async function handleDeleteSubCategory(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
-  await deleteSubCategory(subCategory).then(() =>
+  await deleteSubCategory(props.subCategory).then(() =>
     navigateTo({
-      path: '/categories/' + subCategory.categoryId,
+      path: '/categories/' + props.subCategory.categoryId,
     })
   )
 }

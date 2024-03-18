@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-const { item } = defineProps<{
+const props = defineProps<{
   label: string
   item: any
 }>()
@@ -25,6 +25,6 @@ const emits = defineEmits<{
 }>()
 
 function dismiss(): void {
-  emits('dismiss', item)
+  emits('dismiss', props.item)
 }
 </script>

@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import type { TagGroupType } from '~/types'
-import Button from '~/components/ui-part/form/Button'
+import Button from '~/components/ui-part/form/Button.vue'
 
-const { tagGroup } = defineProps<{ tagGroup: TagGroupType }>()
+defineProps<{ tagGroup: TagGroupType }>()
 </script>

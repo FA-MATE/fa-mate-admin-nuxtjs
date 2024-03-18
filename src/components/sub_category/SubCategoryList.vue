@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import type { CategoryType } from '~/types'
-import Button from '~/components/ui-part/form/Button'
+import Button from '~/components/ui-part/form/Button.vue'
 
-const { category } = defineProps<{ category: CategoryType }>()
+defineProps<{ category: CategoryType }>()
 </script>

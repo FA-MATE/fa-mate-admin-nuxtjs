@@ -8,36 +8,36 @@ export const useSingleSelectableTextInput = (items: any[], nameColumn: string, s
     filteredItems.value = items.filter((item) => item[nameColumn].includes(searchKeyword))
   }
 
-  function onFocusChangedInputText(isFocused: boolean): void {
+  function onChangedInputTextFocus(isFocused: boolean): void {
     if (!isFocused) {
       filteredItems.value = []
     }
   }
 
-  function onItemChecked(e: any, item: any): void {
+  function onChangedItemSelectState(e: any, item: any): void {
     if (e.target.checked) {
       selectedItem.value = item
     } else {
-      selectedItem.value = null
+      selectedItem.value.em = null
     }
   }
 
-  function onItemDismiss(): void {
+  function onDismissItem(): void {
     selectedItem.value = null
   }
 
-  const render = (): any =>
-    h(SelectableTextInput, {
+  const render = (): any => {
+    return h(SelectableTextInput, {
       selectedItems: selectedItem.value != null ? [selectedItem.value] : [],
       filteredItems: filteredItems.value,
       items,
       nameColumn,
       onSearchByKeyword,
-      onFocusChangedInputText,
-      onItemChecked,
-      onItemDismiss,
+      onChangedInputTextFocus,
+      onChangedItemSelectState,
+      onDismissItem,
     })
-
+  }
   const UseSingleSelectableTextInputComponent = defineComponent({ render })
   return UseSingleSelectableTextInputComponent
 }

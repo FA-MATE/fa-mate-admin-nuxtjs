@@ -31,19 +31,16 @@ import type { CategoryType } from '~/types'
 import { useCategoriesStore } from '~/stores/category'
 import InputTextField from '~/components/ui-part/form/InputTextField.vue'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useRouter } from 'vue-router'
 
 const category = defineModel<CategoryType>({ required: true })
 
 const { postCategory, putCategory, deleteCategory } = useCategoriesStore()
 
-const router = useRouter()
-
 async function handlePostCategory(): Promise<void> {
   if (!confirm('新規追加しますか？')) return
 
   await postCategory(category.value).then((newCategory) => {
-    router.push({ path: '/categories/' + newCategory.id })
+    navigateTo({ path: '/categories/' + newCategory.id })
   })
 }
 
@@ -57,7 +54,7 @@ async function handleDeleteCategory(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
   await deleteCategory(category.value).then(() => {
-    router.push({ path: '/categories' })
+    navigateTo({ path: '/categories' })
   })
 }
 </script>

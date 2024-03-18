@@ -11,7 +11,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const id = route.params.id
+const id = parseInt(route.params.id as string)
 
 const { categoriesStore } = useCategoriesStore()
 const initCategory: CategoryType = {
@@ -20,6 +20,6 @@ const initCategory: CategoryType = {
   subCategories: [],
 }
 const category = computed(
-  () => categoriesStore.categories.find((category: CategoryType) => category.id.toString() == id) || initCategory
+  () => categoriesStore.categories.find((category: CategoryType) => category.id == id) || initCategory
 )
 </script>

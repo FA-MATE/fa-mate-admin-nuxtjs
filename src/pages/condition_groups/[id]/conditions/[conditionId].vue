@@ -1,3 +1,7 @@
+<template>
+  <ConditionForm v-model="condition" />
+</template>
+
 <script setup lang="ts">
 import type { ConditionGroupType, ConditionType } from '~/types'
 import { useConditionsStore } from '~/stores/condition'
@@ -17,13 +21,10 @@ const conditionGroup = conditionGroups.find(
 const initCondition: ConditionType = {
   conditionGroupId,
   name: '',
-  orderNo: '0',
+  orderNo: 0,
 }
+
 const condition = computed(
   () => conditionGroup?.conditions?.find((condition: ConditionType) => condition.id == id) || initCondition
 )
 </script>
-
-<template>
-  <ConditionForm v-model="condition" />
-</template>

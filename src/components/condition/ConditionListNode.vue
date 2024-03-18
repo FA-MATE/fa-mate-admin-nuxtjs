@@ -21,19 +21,16 @@
 import type { ConditionType } from '~/types'
 import { useConditionsStore } from '~/stores/condition'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useRouter } from 'vue-router'
 
 const { deleteCondition } = useConditionsStore()
-const { condition } = defineProps<{ condition: ConditionType }>()
-
-const router = useRouter()
+const props = defineProps<{ condition: ConditionType }>()
 
 async function handleDeleteCondition(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
-  await deleteCondition(condition).then(() => {
-    router.push({
-      path: '/condition_groups/' + condition.conditionGroupId,
+  await deleteCondition(props.condition).then(() => {
+    navigateTo({
+      path: '/condition_groups/' + props.condition.conditionGroupId,
     })
   })
 }

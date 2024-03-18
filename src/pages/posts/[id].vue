@@ -1,3 +1,9 @@
+<template>
+  <div>
+    <PostForm v-model="post" />
+  </div>
+</template>
+
 <script setup lang="ts">
 import type { PostType } from '~/types'
 import { usePostsStore } from '~/stores/post'
@@ -23,11 +29,5 @@ const initPost: PostType = {
   createdAt: '',
   updatedAt: '',
 }
-const post = computed(() => postsStore.posts.find((post: PostType) => post.id == id) || initPost)
+const post = postsStore.posts.find((post: PostType) => post.id == id) || initPost
 </script>
-
-<template>
-  <div>
-    <PostForm v-model="post" />
-  </div>
-</template>

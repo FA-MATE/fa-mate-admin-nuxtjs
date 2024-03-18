@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import type { ConditionType } from '~/types'
 import { useConditionsStore } from '~/stores/condition'
 import InputTextField from '~/components/ui-part/form/InputTextField.vue'
@@ -36,13 +35,11 @@ const { postCondition, putCondition, deleteCondition } = useConditionsStore()
 
 const condition = defineModel<ConditionType>({ required: true })
 
-const router = useRouter()
-
 async function handlePostCondition(): Promise<void> {
   if (!confirm('新規追加しますか？')) return
 
   await postCondition(condition.value).then(() => {
-    router.push({
+    navigateTo({
       path: '/condition_groups/' + condition.value.conditionGroupId,
     })
   })
@@ -52,7 +49,7 @@ async function handlePutCondition(): Promise<void> {
   if (!confirm('修正しますか？')) return
 
   await putCondition(condition.value).then(() => {
-    router.push({
+    navigateTo({
       path: '/condition_groups/' + condition.value.conditionGroupId,
     })
   })
@@ -62,7 +59,7 @@ async function handleDeleteCondition(): Promise<void> {
   if (!confirm('削除しますか？')) return
 
   await deleteCondition(condition.value).then(() => {
-    router.push({
+    navigateTo({
       path: '/condition_groups/' + condition.value.conditionGroupId,
     })
   })

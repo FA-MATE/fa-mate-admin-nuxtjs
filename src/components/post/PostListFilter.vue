@@ -16,7 +16,7 @@ import Button from '~/components/ui-part/form/Button.vue'
 import { shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-const { categoryId, subCategoryId } = defineProps<{
+const props = defineProps<{
   categoryId?: string
   subCategoryId?: string
 }>()
@@ -25,8 +25,8 @@ const categoriesStore = useCategoriesStore()
 const categories = categoriesStore.categoriesStore.categories
 const subCategories = categories.map((category: CategoryType) => category.subCategories).flat()
 
-const selectedCategory = shallowRef(categories.find((category) => category.id == categoryId))
-const selectedSubCategory = shallowRef(subCategories.find((subCategory) => subCategory.id == subCategoryId))
+const selectedCategory = shallowRef(categories.find((category) => category.id == props.categoryId))
+const selectedSubCategory = shallowRef(subCategories.find((subCategory) => subCategory.id == props.subCategoryId))
 
 const CategoryFinderComponent = useSingleSelectableTextInput(
   categoriesStore.categoriesStore.categories,
@@ -35,10 +35,8 @@ const CategoryFinderComponent = useSingleSelectableTextInput(
 )
 const SubCategoryFinderComponent = useSingleSelectableTextInput(subCategories, 'name', selectedSubCategory)
 
-type queryStringType = { categoryId?: string; subCategoryId?: string }
-
 const router = useRouter()
-
+type queryStringType = { categoryId?: number; subCategoryId?: number }
 async function filterPosts(): Promise<void> {
   const queryStrings: queryStringType = {}
   if (selectedCategory.value != undefined) queryStrings.categoryId = selectedCategory.value.id

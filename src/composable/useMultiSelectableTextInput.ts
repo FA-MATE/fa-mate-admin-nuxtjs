@@ -8,13 +8,13 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string, se
     filteredItems.value = items.filter((item) => item[nameColumn].includes(searchKeyword))
   }
 
-  function onFocusChangedInputText(isFocused: boolean): void {
+  function onChangedInputTextFocus(isFocused: boolean): void {
     if (!isFocused) {
       filteredItems.value = []
     }
   }
 
-  function onItemChecked(e: any, item: any): void {
+  function onChangedItemSelectState(e: any, item: any): void {
     if (e.target.checked) {
       selectedItems.value = [item, ...selectedItems.value]
     } else {
@@ -22,7 +22,7 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string, se
     }
   }
 
-  function onItemDismiss(item: any): void {
+  function onDismissItem(item: any): void {
     selectedItems.value = selectedItems.value.filter((selectedItem) => selectedItem.id != item.id)
   }
 
@@ -33,9 +33,9 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string, se
       items,
       nameColumn,
       onSearchByKeyword,
-      onFocusChangedInputText,
-      onItemChecked,
-      onItemDismiss,
+      onChangedInputTextFocus,
+      onChangedItemSelectState,
+      onDismissItem,
     })
 
   const UseMultiSelectableTextInputComponent = defineComponent({ render })

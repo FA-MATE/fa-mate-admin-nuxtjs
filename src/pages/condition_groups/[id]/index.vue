@@ -14,12 +14,10 @@ const id = route.params.id
 const { conditionGroupsStore } = useConditionsStore()
 const initConditionGroup: ConditionGroupType = {
   name: '',
-  orderNo: '0',
+  orderNo: 0,
   conditions: [],
 }
-const conditionGroup = computed(
-  () =>
-    conditionGroupsStore.conditionGroups.find((conditionGroup: ConditionGroupType) => conditionGroup.id == id) ||
-    initConditionGroup
-)
+const conditionGroup =
+  conditionGroupsStore.conditionGroups.find((conditionGroup: ConditionGroupType) => conditionGroup.id == id) ||
+  initConditionGroup
 </script>

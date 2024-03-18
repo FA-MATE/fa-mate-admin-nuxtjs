@@ -14,10 +14,8 @@ const id = route.params.id
 const { tagGroupsStore } = useTagsStore()
 const initTagGroup: TagGroupType = {
   name: '',
-  orderNo: '0',
+  orderNo: 0,
   tags: [],
 }
-const tagGroup = computed(
-  () => tagGroupsStore.tagGroups.find((tagGroup: TagGroupType) => tagGroup.id == id) || initTagGroup
-)
+const tagGroup = tagGroupsStore.tagGroups.find((tagGroup: TagGroupType) => tagGroup.id == id) || initTagGroup
 </script>

@@ -8,6 +8,7 @@
 import { useCategoriesStore } from '~/stores/category'
 import { useTagsStore } from '~/stores/tag'
 import { useConditionsStore } from '~/stores/condition'
+import { useUsersStore } from './stores/user'
 
 const categoriesStore = useCategoriesStore()
 await useAsyncData(() => categoriesStore.getCategories())

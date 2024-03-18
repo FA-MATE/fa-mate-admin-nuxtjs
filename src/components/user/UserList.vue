@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import type { UserType } from '~/types'
-import Button from '~/components/ui-part/form/Button'
+import Button from '~/components/ui-part/form/Button.vue'
 
 defineProps<{ users: UserType[] }>()
 </script>

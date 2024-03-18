@@ -1,3 +1,7 @@
+<template>
+  <TagForm v-model="tag" />
+</template>
+
 <script setup lang="ts">
 import type { TagGroupType, TagType } from '~/types'
 import { useTagsStore } from '~/stores/tag'
@@ -14,11 +18,8 @@ const tagGroup = tagGroups.find((tagGroup: TagGroupType) => tagGroup.id == tagGr
 const initTag: TagType = {
   tagGroupId,
   name: '',
-  orderNo: '0',
+  orderNo: 0,
 }
-const tag = computed(() => tagGroup?.tags?.find((tag: TagType) => tag.id == id) || initTag)
-</script>
 
-<template>
-  <TagForm v-model="tag" />
-</template>
+const tag = tagGroup?.tags?.find((tag: TagType) => tag.id == id) || initTag
+</script>
