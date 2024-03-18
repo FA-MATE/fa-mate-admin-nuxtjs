@@ -1,14 +1,14 @@
 import { h, ref } from 'vue'
-import SingleSelectableTextInput from '~/components/ui-part/SingleSelectableTextInput.vue'
+import SelectableTextInput from '~/components/ui-part/SelectableTextInput.vue'
 
 export const useSingleSelectableTextInput = (items: any[], nameColumn: string, selectedItem: Ref): any => {
   const filteredItems = ref<any[]>([])
 
-  function onSearchKeywordChanged(searchKeyword: string): void {
+  function onSearchByKeyword(searchKeyword: string): void {
     filteredItems.value = items.filter((item) => item[nameColumn].includes(searchKeyword))
   }
 
-  function onFocusChanged(isFocused: boolean): void {
+  function onFocusChangedInputText(isFocused: boolean): void {
     if (!isFocused) {
       filteredItems.value = []
     }
@@ -18,22 +18,22 @@ export const useSingleSelectableTextInput = (items: any[], nameColumn: string, s
     if (e.target.checked) {
       selectedItem.value = item
     } else {
-      selectedItem.value = {}
+      selectedItem.value = null
     }
   }
 
   function onItemDismiss(): void {
-    selectedItem.value = {}
+    selectedItem.value = null
   }
 
   const render = (): any =>
-    h(SingleSelectableTextInput, {
-      selectedItem: selectedItem.value,
+    h(SelectableTextInput, {
+      selectedItems: selectedItem.value != null ? [selectedItem.value] : [],
       filteredItems: filteredItems.value,
       items,
       nameColumn,
-      onSearchKeywordChanged,
-      onFocusChanged,
+      onSearchByKeyword,
+      onFocusChangedInputText,
       onItemChecked,
       onItemDismiss,
     })

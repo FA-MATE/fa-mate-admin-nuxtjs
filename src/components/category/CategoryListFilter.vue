@@ -1,23 +1,26 @@
 <template>
-  <CategoryFinderComponent class="z-20" label="カテゴリ" />
-  <Button color="green" label="検索" @click="filterCategories" />
+  <div class="my-2 py-2">
+    <CategoryFinderComponent class="z-20" label="カテゴリ" />
+    <div class="flex justify-end pt-2">
+      <Button color="green" label="検索" @click="filterCategories" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
-import { useSingleSelectableTextInput } from '~/composable/useSingleSelectableTextInput'
 import { useCategoriesStore } from '~/stores/category'
+import { useSingleSelectableTextInput } from '~/composable/useSingleSelectableTextInput'
 import Button from '~/components/ui-part/form/Button.vue'
 
-const router = useRouter()
+type queryStringType = { id?: string }
 
-const { id } = defineProps<{ id?: string }>()
+const router = useRouter()
+const { id } = defineProps<{ id?: string; subCategoryIds?: string }>()
 
 const categoriesStore = useCategoriesStore()
-
-const selectedItem = shallowRef(categoriesStore.categoriesStore.categories.find((category) => category.id == id) || {})
-
+const selectedItem = shallowRef(categoriesStore.categoriesStore.categories.find((category) => category.id == id))
 const CategoryFinderComponent = useSingleSelectableTextInput(
   categoriesStore.categoriesStore.categories,
   'name',
@@ -25,8 +28,8 @@ const CategoryFinderComponent = useSingleSelectableTextInput(
 )
 
 function filterCategories(): void {
-  const queryStrings = {}
-  if (selectedItem.value.id != undefined && selectedItem.value.id != null) queryStrings['id'] = selectedItem.value.id
+  const queryStrings: queryStringType = {}
+  if (selectedItem.value != undefined) queryStrings.id = selectedItem.value.id
 
   router
     .push({

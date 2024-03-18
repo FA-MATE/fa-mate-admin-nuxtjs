@@ -1,7 +1,11 @@
 <template>
-  <CategoryFinderComponent class="z-20" label="カテゴリ" />
-  <SubCategoryFinderComponent class="z-10" label="サブカテゴリ" />
-  <Button color="green" label="検索" @click="filterPosts" />
+  <div class="my-2 py-2">
+    <CategoryFinderComponent class="z-20" label="カテゴリ" />
+    <SubCategoryFinderComponent class="z-10" label="サブカテゴリ" />
+    <div class="flex justify-end pt-2">
+      <Button color="green" label="検索" @click="filterPosts" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -21,8 +25,8 @@ const categoriesStore = useCategoriesStore()
 const categories = categoriesStore.categoriesStore.categories
 const subCategories = categories.map((category: CategoryType) => category.subCategories).flat()
 
-const selectedCategory = shallowRef(categories.find((category) => category.id == categoryId) || {})
-const selectedSubCategory = shallowRef(subCategories.find((subCategory) => subCategory.id == subCategoryId) || {})
+const selectedCategory = shallowRef(categories.find((category) => category.id == categoryId))
+const selectedSubCategory = shallowRef(subCategories.find((subCategory) => subCategory.id == subCategoryId))
 
 const CategoryFinderComponent = useSingleSelectableTextInput(
   categoriesStore.categoriesStore.categories,
@@ -31,14 +35,14 @@ const CategoryFinderComponent = useSingleSelectableTextInput(
 )
 const SubCategoryFinderComponent = useSingleSelectableTextInput(subCategories, 'name', selectedSubCategory)
 
+type queryStringType = { categoryId?: string; subCategoryId?: string }
+
 const router = useRouter()
 
 async function filterPosts(): Promise<void> {
-  const queryStrings = {}
-  if (selectedCategory.value.id != undefined && selectedCategory.value.id != null)
-    queryStrings['categoryId'] = selectedCategory.value.id
-  if (selectedSubCategory.value.id != undefined && selectedSubCategory.value.id != null)
-    queryStrings['subCategoryId'] = selectedSubCategory.value.id
+  const queryStrings: queryStringType = {}
+  if (selectedCategory.value != undefined) queryStrings.categoryId = selectedCategory.value.id
+  if (selectedSubCategory.value != undefined) queryStrings.subCategoryId = selectedSubCategory.value.id
 
   router
     .push({

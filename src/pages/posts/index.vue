@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <PostList :posts="data" class="mx-auto">
+  <div class="flex overflow-x-scroll">
+    <PostList :posts="data || []" class="mx-auto">
       <PostListFilter :category-id="categoryId" :sub-category-id="subCategoryId" />
     </PostList>
   </div>

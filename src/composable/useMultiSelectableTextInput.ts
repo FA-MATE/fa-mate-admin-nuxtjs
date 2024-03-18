@@ -1,14 +1,14 @@
-import { defineComponent, h, ref } from 'vue'
-import MultiSelectableTextInput from '~/components/ui-part/MultiSelectableTextInput.vue'
+import { h, ref } from 'vue'
+import SelectableTextInput from '~/components/ui-part/SelectableTextInput.vue'
 
 export const useMultiSelectableTextInput = (items: any[], nameColumn: string, selectedItems: Ref<any[]>): any => {
   const filteredItems = ref<any[]>([])
 
-  function onSearchKeywordChanged(searchKeyword: string): void {
+  function onSearchByKeyword(searchKeyword: string): void {
     filteredItems.value = items.filter((item) => item[nameColumn].includes(searchKeyword))
   }
 
-  function onFocusChanged(isFocused: boolean): void {
+  function onFocusChangedInputText(isFocused: boolean): void {
     if (!isFocused) {
       filteredItems.value = []
     }
@@ -27,13 +27,13 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string, se
   }
 
   const render = (): any =>
-    h(MultiSelectableTextInput, {
+    h(SelectableTextInput, {
       selectedItems: selectedItems.value,
       filteredItems: filteredItems.value,
       items,
       nameColumn,
-      onSearchKeywordChanged,
-      onFocusChanged,
+      onSearchByKeyword,
+      onFocusChangedInputText,
       onItemChecked,
       onItemDismiss,
     })

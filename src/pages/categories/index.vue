@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <CategoryList :categories="data" class="mx-auto">
+  <div class="flex overflow-x-scroll">
+    <CategoryList :categories="data || []" class="mx-auto">
       <CategoryListFilter :id="id" />
     </CategoryList>
   </div>
