@@ -10,34 +10,11 @@
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <!-- Current: "bg-gray-600 text-white rounded-md px-3 py-4 text-xs font-medium",
-                   Default: "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium" -->
-              <NuxtLink
-                to="/categories"
-                class="bg-gray-600 text-white rounded-md px-3 py-4 text-xs font-medium"
-                aria-current="page"
-                >カテゴリ管理</NuxtLink
-              >
-              <NuxtLink
-                to="/tag_groups"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium"
-                >タグ管理</NuxtLink
-              >
-              <NuxtLink
-                to="/condition_groups"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium"
-                >お譲り条件管理</NuxtLink
-              >
-              <NuxtLink
-                to="/posts"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium"
-                >投稿管理</NuxtLink
-              >
-              <NuxtLink
-                to="/users"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-4 text-xs font-medium"
-                >ユーザ管理</NuxtLink
-              >
+              <NuxtLink to="/categories" :class="classObject('categories')" aria-current="page">カテゴリ管理</NuxtLink>
+              <NuxtLink to="/tag_groups" :class="classObject('tag_groups')">タグ管理</NuxtLink>
+              <NuxtLink to="/condition_groups" :class="classObject('condition_groups')">お譲り条件管理</NuxtLink>
+              <NuxtLink to="/posts" :class="classObject('posts')">投稿管理</NuxtLink>
+              <NuxtLink to="/users" :class="classObject('users')">ユーザ管理</NuxtLink>
             </div>
           </div>
         </div>
@@ -47,35 +24,24 @@
     <!-- Mobile menu, show/hide based on menu state. -->
     <div id="mobile-menu" class="sm:hidden">
       <div class="space-y-1 px-2 pb-3 pt-8">
-        <!-- Current: "bg-gray-900 text-white block rounded-md px-3 py-4 text-sm font-medium",
-             Default: "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium" -->
-        <NuxtLink
-          to="/categories"
-          class="bg-gray-900 text-white block rounded-md px-3 py-4 text-sm font-medium"
-          aria-current="page"
-          >カテゴリ管理</NuxtLink
-        >
-        <NuxtLink
-          to="/tag_groups"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium"
-          >タグ管理</NuxtLink
-        >
-        <NuxtLink
-          to="/condition_groups"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium"
-          >お譲り条件管理</NuxtLink
-        >
-        <NuxtLink
-          to="/posts"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium"
-          >投稿管理</NuxtLink
-        >
-        <NuxtLink
-          to="/users"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium"
-          >ユーザ管理</NuxtLink
-        >
+        <NuxtLink to="/categories" :class="classObject('categories')" aria-current="page">カテゴリ管理</NuxtLink>
+        <NuxtLink to="/tag_groups" :class="classObject('tag_groups')">タグ管理</NuxtLink>
+        <NuxtLink to="/condition_groups" :class="classObject('condition_groups')">お譲り条件管理</NuxtLink>
+        <NuxtLink to="/posts" :class="classObject('posts')">投稿管理</NuxtLink>
+        <NuxtLink to="/users" :class="classObject('users')">ユーザ管理</NuxtLink>
       </div>
     </div>
   </nav>
 </template>
+
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+function classObject(routeName: string): string {
+  return route.name == routeName
+    ? 'bg-gray-900 text-white block rounded-md px-3 py-4 text-sm font-medium'
+    : 'text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-4 text-sm font-medium'
+}
+</script>
