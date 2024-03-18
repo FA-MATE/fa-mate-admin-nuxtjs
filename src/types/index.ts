@@ -1,6 +1,6 @@
 export type SubCategoryType = {
   id?: number
-  categoryId: string
+  categoryId: number
   name: string
   orderNo: number
 }
@@ -14,7 +14,7 @@ export type CategoryType = {
 
 export type TagType = {
   id?: number
-  tagGroupId: string
+  tagGroupId: number
   name: string
   orderNo: number
 }
@@ -28,7 +28,7 @@ export type TagGroupType = {
 
 export type ConditionType = {
   id?: number
-  conditionGroupId: string
+  conditionGroupId: number
   name: string
   orderNo: number
 }
@@ -57,8 +57,8 @@ export type PostType = {
   id?: number
   title: string
   body: string
-  categoryId: string
-  subCategoryId: string
+  categoryId: number
+  subCategoryId: number
   user: UserType
   tags: TagType[]
   conditions: ConditionType[]

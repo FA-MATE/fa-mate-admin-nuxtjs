@@ -1,7 +1,7 @@
 import { h, ref } from 'vue'
 import SelectableTextInput from '~/components/ui-part/SelectableTextInput.vue'
 
-export const useSingleSelectableTextInput = (items: any[], nameColumn: string, selectedItem: Ref): any => {
+export const useSingleSelectableTextInput = (items: any[], nameColumn: string): any => {
   const filteredItems = ref<any[]>([])
 
   function onSearchByKeyword(searchKeyword: string): void {
@@ -14,21 +14,20 @@ export const useSingleSelectableTextInput = (items: any[], nameColumn: string, s
     }
   }
 
-  function onChangedItemSelectState(e: any, item: any): void {
+  function onChangedItemSelectState(selectedItems: Ref, e: any, item: any): void {
     if (e.target.checked) {
-      selectedItem.value = item
+      selectedItems.value = [item]
     } else {
-      selectedItem.value.em = null
+      selectedItems.value = []
     }
   }
 
-  function onDismissItem(): void {
-    selectedItem.value = null
+  function onDismissItem(selectedItems: Ref): void {
+    selectedItems.value = []
   }
 
   const render = (): any => {
     return h(SelectableTextInput, {
-      selectedItems: selectedItem.value != null ? [selectedItem.value] : [],
       filteredItems: filteredItems.value,
       items,
       nameColumn,
@@ -38,6 +37,6 @@ export const useSingleSelectableTextInput = (items: any[], nameColumn: string, s
       onDismissItem,
     })
   }
-  const UseSingleSelectableTextInputComponent = defineComponent({ render })
-  return UseSingleSelectableTextInputComponent
+
+  return defineComponent({ render })
 }

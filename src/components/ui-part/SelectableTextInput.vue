@@ -65,8 +65,9 @@ const isInputOpen = ref(false)
 const isInputCloseable = ref(false)
 const inputRef = ref<HTMLInputElement>()
 
-const props = defineProps<{
-  selectedItems: any[]
+const selectedItems = defineModel<any>()
+
+defineProps<{
   filteredItems: any[]
   items: any
   nameColumn: string
@@ -76,8 +77,8 @@ const props = defineProps<{
 const emits = defineEmits<{
   searchByKeyword: [searchKeyword: string]
   changedInputTextFocus: [isInputOpen: boolean]
-  changedItemSelectState: [e: Event, item: any]
-  dismissItem: [item: any]
+  changedItemSelectState: [selectedItem: Ref, e: Event, item: any]
+  dismissItem: [selectedItem: Ref, item: any]
 }>()
 
 function searchByKeyword(): void {
@@ -91,13 +92,13 @@ function changedInputTextFocus(e: any): void {
 }
 
 function dismissItem(item: any): void {
-  emits('dismissItem', item)
+  emits('dismissItem', selectedItems, item)
 
   inputFocus()
 }
 
 const changedItemSelectState = (e: any, item: any): void => {
-  emits('changedItemSelectState', e, item)
+  emits('changedItemSelectState', selectedItems, e, item)
 
   inputFocus()
 }
@@ -131,6 +132,6 @@ const inputTextCloseableTrue = (): void => {
 }
 
 const isSelectedItem = (item: any): boolean => {
-  return props.selectedItems.find((sItem: any) => sItem.id == item.id) != undefined
+  return selectedItems.value.find((sItem: any) => sItem.id == item.id) != undefined
 }
 </script>

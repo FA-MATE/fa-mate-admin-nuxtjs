@@ -36,3 +36,9 @@ export function mapToQueryString(hash: any): string {
 
   return queryString
 }
+
+export function createQueryStrings(obj: any, objKey: string, queryStringKey: string, queryStrings: any = {}): any {
+  if (obj[objKey]) queryStrings[queryStringKey] = obj[objKey]
+
+  return queryStrings
+}

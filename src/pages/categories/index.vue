@@ -14,5 +14,5 @@ const route = useRoute()
 
 const queryString = mapToQueryString(camelToSnakeCase(route.query))
 const { data } = useFetch('/api/categories?' + queryString)
-const id = route.query.id
+const id = parseInt(route.query.id as string)
 </script>
