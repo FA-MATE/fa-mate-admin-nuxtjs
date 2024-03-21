@@ -28,12 +28,8 @@ const subCategories = categories.map((category: CategoryType) => category.subCat
 const selectedCategory = shallowRef(categories.find((category) => category.id == props.categoryId))
 const selectedSubCategory = shallowRef(subCategories.find((subCategory) => subCategory.id == props.subCategoryId))
 
-const CategoryFinderComponent = useSingleSelectableTextInput(
-  categoriesStore.categoriesStore.categories,
-  'name',
-  selectedCategory
-)
-const SubCategoryFinderComponent = useSingleSelectableTextInput(subCategories, 'name', selectedSubCategory)
+const CategoryFinderComponent = useSingleSelectableTextInput(categoriesStore.categoriesStore.categories, 'name')
+const SubCategoryFinderComponent = useSingleSelectableTextInput(subCategories, 'name')
 
 const router = useRouter()
 type queryStringType = { categoryId?: number; subCategoryId?: number }

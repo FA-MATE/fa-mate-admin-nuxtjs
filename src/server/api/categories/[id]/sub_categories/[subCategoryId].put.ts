@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
   const id: string | undefined = event.context.params?.subCategoryId
   const body = await readBody(event)
   const subCategory = {
+    categoryId: body.subCategory.categoryId,
     name: body.subCategory.name,
     orderNo: body.subCategory.orderNo,
   }

@@ -1,7 +1,7 @@
 import { h, ref } from 'vue'
 import SelectableTextInput from '~/components/ui-part/SelectableTextInput.vue'
 
-export const useMultiSelectableTextInput = (items: any[], nameColumn: string, selectedItems: Ref<any[]>): any => {
+export const useMultiSelectableTextInput = (items: any[], nameColumn: string): any => {
   const filteredItems = ref<any[]>([])
 
   function onSearchByKeyword(searchKeyword: string): void {
@@ -14,21 +14,20 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string, se
     }
   }
 
-  function onChangedItemSelectState(e: any, item: any): void {
+  function onChangedItemSelectState(selectedItemIds: Ref<number[]>, e: any, item: any): void {
     if (e.target.checked) {
-      selectedItems.value = [item, ...selectedItems.value]
+      selectedItemIds.value = [item, ...selectedItemIds.value]
     } else {
-      selectedItems.value = selectedItems.value.filter((selectedItem) => selectedItem.id != item.id)
+      selectedItemIds.value = selectedItemIds.value.filter((selectedItemId) => selectedItemId != item.id)
     }
   }
 
-  function onDismissItem(item: any): void {
-    selectedItems.value = selectedItems.value.filter((selectedItem) => selectedItem.id != item.id)
+  function onDismissItem(selectedItemIds: Ref<number[]>, item: any): void {
+    selectedItemIds.value = selectedItemIds.value.filter((selectedItemId) => selectedItemId != item.id)
   }
 
-  const render = (): any =>
-    h(SelectableTextInput, {
-      selectedItems: selectedItems.value,
+  const render = (): any => {
+    return h(SelectableTextInput, {
       filteredItems: filteredItems.value,
       items,
       nameColumn,
@@ -37,7 +36,7 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string, se
       onChangedItemSelectState,
       onDismissItem,
     })
+  }
 
-  const UseMultiSelectableTextInputComponent = defineComponent({ render })
-  return UseMultiSelectableTextInputComponent
+  return defineComponent({ render })
 }

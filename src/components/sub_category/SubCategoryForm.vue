@@ -7,7 +7,7 @@
         <div class="mt-2">
           <div class="grid grid-cols-1 gap-6">
             <InputTextField v-model="subCategory.id" label="ID" type="text" readonly />
-            <CategoryFinderComponent v-model="category" />
+            <CategoryFinderComponent v-model="subCategory.categoryId" />
             <InputTextField v-model="subCategory.name" label="サブカテゴリ名" type="text" />
             <InputTextField v-model="subCategory.orderNo" label="ソート順位" type="text" />
             <div v-if="subCategory?.id == undefined" class="flex justify-between">
@@ -36,9 +36,7 @@ const { postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStor
 
 const categoriesStore = useCategoriesStore()
 const subCategory = defineModel<SubCategoryType>({ required: true })
-const category = ref(
-  categoriesStore.categoriesStore.categories.filter((category) => category.id == subCategory.value.categoryId)
-)
+
 const CategoryFinderComponent = useSingleSelectableTextInput(categoriesStore.categoriesStore.categories, 'name')
 
 async function handlePostSubCategory(): Promise<void> {
