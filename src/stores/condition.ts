@@ -2,14 +2,13 @@ import { defineStore } from 'pinia'
 import type { ConditionGroupType, ConditionType } from '~/types'
 
 export const useConditionsStore = defineStore('conditions', () => {
-  const conditionGroupsStore = reactive({
-    conditionGroups: [] as ConditionGroupType[],
-  })
+  const conditionGroups = ref<ConditionGroupType[]>([])
+  const conditions = computed(() => conditionGroups.value.flatMap((conditionGroup) => conditionGroup.conditions))
 
   async function getConditionGroups(): Promise<void> {
     const newConditionGroups = (await $fetch('/api/condition_groups')) as ConditionGroupType[]
 
-    conditionGroupsStore.conditionGroups = newConditionGroups
+    conditionGroups.value = newConditionGroups.map((conditionGroup) => decorateNameForCondition(conditionGroup))
   }
 
   async function postConditionGroup(conditionGroup: ConditionGroupType): Promise<ConditionGroupType> {
@@ -66,8 +65,17 @@ export const useConditionsStore = defineStore('conditions', () => {
     await getConditionGroups()
   }
 
+  function decorateNameForCondition(conditionGroup: ConditionGroupType): ConditionGroupType {
+    conditionGroup.conditions = conditionGroup.conditions.map((condition) => {
+      condition.name = `${conditionGroup.name}: ${condition.name}`
+      return condition
+    })
+    return conditionGroup
+  }
+
   return {
-    conditionGroupsStore,
+    conditionGroups,
+    conditions,
     getConditionGroups,
     postConditionGroup,
     putConditionGroup,

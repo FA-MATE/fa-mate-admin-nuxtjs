@@ -14,16 +14,16 @@ export const useSingleSelectableTextInput = (items: any[], nameColumn: string): 
     }
   }
 
-  function onChangedItemSelectState(selectedItemId: Ref<number | null>, e: any, item: any): void {
+  function onChangedItemSelectState(selectedItemId: Ref<string | undefined>, e: any, item: any): void {
     if (e.target.checked) {
-      selectedItemId.value = item.id
+      selectedItemId.value = item.id.toString()
     } else {
-      selectedItemId.value = null
+      selectedItemId.value = undefined
     }
   }
 
-  function onDismissItem(selectedItemId: Ref<number | null>): void {
-    selectedItemId.value = null
+  function onDismissItem(selectedItemId: Ref<string | undefined>): void {
+    selectedItemId.value = undefined
   }
 
   const render = (): any => {

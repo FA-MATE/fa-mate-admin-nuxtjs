@@ -2,12 +2,12 @@ import { defineStore } from 'pinia'
 import type { PostType } from '~/types'
 
 export const usePostsStore = defineStore('posts', () => {
-  const postsStore = reactive({ posts: [] as PostType[] })
+  const posts = ref<PostType[]>([])
 
   async function getPosts(queryString: string): Promise<void> {
     const newPosts = (await $fetch('/api/posts?' + queryString)) as PostType[]
 
-    postsStore.posts = newPosts
+    posts.value = newPosts
   }
 
   async function postPost(post: PostType): Promise<PostType> {
@@ -16,7 +16,7 @@ export const usePostsStore = defineStore('posts', () => {
       body: { post },
     })) as PostType
 
-    postsStore.posts = [...postsStore.posts, newPost]
+    posts.value = [...posts.value, newPost]
 
     return newPost
   }
@@ -27,7 +27,7 @@ export const usePostsStore = defineStore('posts', () => {
       body: { post },
     })) as PostType
 
-    postsStore.posts = [...postsStore.posts.filter((post: PostType) => post.id != newPosts.id), newPosts]
+    posts.value = [...posts.value.filter((post: PostType) => post.id != newPosts.id), newPosts]
   }
 
   async function deletePost(post: PostType): Promise<void> {
@@ -36,8 +36,8 @@ export const usePostsStore = defineStore('posts', () => {
       method: 'DELETE',
     })
 
-    postsStore.posts = postsStore.posts.filter((post: PostType) => post.id !== postId)
+    posts.value = posts.value.filter((post: PostType) => post.id !== postId)
   }
 
-  return { postsStore, getPosts, postPost, putPost, deletePost }
+  return { posts, getPosts, postPost, putPost, deletePost }
 })

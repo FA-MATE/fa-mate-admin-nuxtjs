@@ -4,12 +4,14 @@ import type { CategoryType, SubCategoryType } from '~/types'
 const API_ENDPOINT = '/api/categories'
 
 export const useCategoriesStore = defineStore('categories', () => {
-  const categoriesStore = reactive({ categories: [] as CategoryType[] })
+  const categories = ref<CategoryType[]>([])
+  const subCategories = computed(() => categories.value.flatMap((category) => category.subCategories))
 
   async function getCategories(queryString: string = ''): Promise<void> {
     const newCategories = (await $fetch(`${API_ENDPOINT}?${queryString}`)) as CategoryType[]
 
-    categoriesStore.categories = newCategories
+    categories.value = newCategories
+    categories.value = newCategories.map((category) => decorateNameForSubCategory(category))
   }
 
   async function postCategory(category: CategoryType): Promise<CategoryType> {
@@ -18,7 +20,7 @@ export const useCategoriesStore = defineStore('categories', () => {
       body: { category },
     })) as CategoryType
 
-    categoriesStore.categories = [...categoriesStore.categories, newCategory]
+    categories.value = [...categories.value, decorateNameForSubCategory(newCategory)]
 
     return newCategory
   }
@@ -29,9 +31,7 @@ export const useCategoriesStore = defineStore('categories', () => {
       body: { category },
     })) as CategoryType
 
-    categoriesStore.categories = categoriesStore.categories.map((category) =>
-      category.id != newCategory.id ? newCategory : category
-    )
+    categories.value = categories.value.map((category) => (category.id != newCategory.id ? newCategory : category))
 
     return newCategory
   }
@@ -41,7 +41,7 @@ export const useCategoriesStore = defineStore('categories', () => {
       method: 'DELETE',
     })
 
-    categoriesStore.categories = categoriesStore.categories.filter((category) => category.id != targetCategory.id)
+    categories.value = categories.value.filter((category) => category.id != targetCategory.id)
   }
 
   async function postSubCategory(subCategory: SubCategoryType): Promise<void> {
@@ -70,8 +70,17 @@ export const useCategoriesStore = defineStore('categories', () => {
     await getCategories()
   }
 
+  function decorateNameForSubCategory(category: CategoryType): CategoryType {
+    category.subCategories = category.subCategories.map((subCategory) => {
+      subCategory.name = `${category.name}: ${subCategory.name}`
+      return subCategory
+    })
+    return category
+  }
+
   return {
-    categoriesStore,
+    categories,
+    subCategories,
     getCategories,
     postCategory,
     putCategory,

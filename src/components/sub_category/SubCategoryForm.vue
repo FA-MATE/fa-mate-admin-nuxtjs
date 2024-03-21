@@ -37,7 +37,7 @@ const { postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStor
 const categoriesStore = useCategoriesStore()
 const subCategory = defineModel<SubCategoryType>({ required: true })
 
-const CategoryFinderComponent = useSingleSelectableTextInput(categoriesStore.categoriesStore.categories, 'name')
+const CategoryFinderComponent = useSingleSelectableTextInput(categoriesStore.categories, 'name')
 
 async function handlePostSubCategory(): Promise<void> {
   if (!confirm('新規追加しますか？')) return

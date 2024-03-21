@@ -2,12 +2,13 @@ import { defineStore } from 'pinia'
 import type { TagGroupType, TagType } from '~/types'
 
 export const useTagsStore = defineStore('tags', () => {
-  const tagGroupsStore = reactive({ tagGroups: [] as TagGroupType[] })
+  const tagGroups = ref<TagGroupType[]>([])
+  const tags = computed(() => tagGroups.value.flatMap((tagGroup) => tagGroup.tags))
 
   async function getTagGroups(): Promise<void> {
     const newTagGroups = (await $fetch('/api/tag_groups')) as TagGroupType[]
 
-    tagGroupsStore.tagGroups = newTagGroups
+    tagGroups.value = newTagGroups.map((tagGroup) => decorateNameForTagGroup(tagGroup))
   }
 
   async function postTagGroup(tagGroup: TagGroupType): Promise<TagGroupType> {
@@ -64,8 +65,17 @@ export const useTagsStore = defineStore('tags', () => {
     await getTagGroups()
   }
 
+  function decorateNameForTagGroup(tagGroup: TagGroupType): TagGroupType {
+    tagGroup.tags = tagGroup.tags.map((tag) => {
+      tag.name = `${tagGroup.name}: ${tag.name}`
+      return tag
+    })
+    return tagGroup
+  }
+
   return {
-    tagGroupsStore,
+    tagGroups,
+    tags,
     getTagGroups,
     postTagGroup,
     putTagGroup,

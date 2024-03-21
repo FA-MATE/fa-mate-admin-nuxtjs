@@ -37,8 +37,12 @@ export function mapToQueryString(hash: any): string {
   return queryString
 }
 
-export function createQueryStrings(queryValue: any, queryStringKey: string, queryStrings: any = {}): any {
-  if (queryValue) queryStrings[queryStringKey] = queryValue
+export function createQueryStrings(
+  queryValue: string | undefined,
+  queryStringKey: string,
+  queryStrings: any = {}
+): any {
+  if (queryValue !== undefined && queryValue !== '') queryStrings[queryStringKey] = queryValue
 
   return queryStrings
 }

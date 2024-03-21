@@ -2,12 +2,12 @@ import { defineStore } from 'pinia'
 import type { UserType } from '~/types'
 
 export const useUsersStore = defineStore('users', () => {
-  const usersStore = reactive({ users: [] as UserType[] })
+  const users = ref<UserType[]>([])
 
   async function getUsers(queryString?: string): Promise<void> {
     const newUsers = (await $fetch('/api/users?' + queryString)) as UserType[]
 
-    usersStore.users = newUsers
+    users.value = newUsers
   }
 
   async function userUser(user: UserType): Promise<UserType> {
@@ -38,5 +38,5 @@ export const useUsersStore = defineStore('users', () => {
     await getUsers()
   }
 
-  return { usersStore, getUsers, userUser, putUser, deleteUser }
+  return { users, getUsers, userUser, putUser, deleteUser }
 })

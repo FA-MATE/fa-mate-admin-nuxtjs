@@ -14,16 +14,16 @@ export const useMultiSelectableTextInput = (items: any[], nameColumn: string): a
     }
   }
 
-  function onChangedItemSelectState(selectedItemIds: Ref<number[]>, e: any, item: any): void {
+  function onChangedItemSelectState(selectedItemIds: Ref<string[]>, e: any, item: any): void {
     if (e.target.checked) {
-      selectedItemIds.value = [item, ...selectedItemIds.value]
+      selectedItemIds.value = [item.id.toString(), ...selectedItemIds.value]
     } else {
-      selectedItemIds.value = selectedItemIds.value.filter((selectedItemId) => selectedItemId != item.id)
+      selectedItemIds.value = selectedItemIds.value.filter((selectedItemId) => selectedItemId !== item.id.toString())
     }
   }
 
-  function onDismissItem(selectedItemIds: Ref<number[]>, item: any): void {
-    selectedItemIds.value = selectedItemIds.value.filter((selectedItemId) => selectedItemId != item.id)
+  function onDismissItem(selectedItemIds: Ref<string[]>, item: any): void {
+    selectedItemIds.value = selectedItemIds.value.filter((selectedItemId) => selectedItemId !== item.id.toString())
   }
 
   const render = (): any => {

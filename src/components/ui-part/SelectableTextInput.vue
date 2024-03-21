@@ -65,7 +65,7 @@ const isInputOpen = ref(false)
 const isInputCloseable = ref(false)
 const inputRef = ref<HTMLInputElement>()
 
-const selectedItemIds = defineModel<number | number[]>()
+const selectedItemIds = defineModel<string | string[]>()
 
 const props = defineProps<{
   filteredItems: any[]
@@ -132,14 +132,16 @@ const inputTextCloseableTrue = (): void => {
 }
 
 const isSelectedItem = (item: any): boolean => {
-  if (selectedItemIds.value === undefined) return false
+  if (selectedItemIds.value === undefined || selectedItemIds.value === '') return false
 
-  return [selectedItemIds.value].flat().find((selectedItemId: number) => selectedItemId == item.id) != undefined
+  return (
+    [selectedItemIds.value].flat().find((selectedItemId: string) => selectedItemId === item.id.toString()) != undefined
+  )
 }
 
-function selectedItemsByIds(selectedItemIds: number | number[] | undefined): any[] {
-  if (selectedItemIds == undefined) return []
+function selectedItemsByIds(selectedItemIds: string | string[] | undefined): any[] {
+  if (selectedItemIds === undefined || selectedItemIds === '') return []
 
-  return [selectedItemIds].flat().map((id) => props.items.find((item: any) => item.id == id))
+  return [selectedItemIds].flat().map((id) => props.items.find((item: any) => id === item.id.toString()))
 }
 </script>

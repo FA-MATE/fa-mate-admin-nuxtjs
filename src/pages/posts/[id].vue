@@ -11,12 +11,12 @@ import { usePostsStore } from '~/stores/post'
 const route = useRoute()
 const id = route.params.id
 
-const { postsStore } = usePostsStore()
+const { posts } = usePostsStore()
 const initPost: PostType = {
   title: '',
   body: '',
-  categoryId: '0',
-  subCategoryId: '0',
+  categoryId: 0,
+  subCategoryId: 0,
   user: {
     nickname: 'test',
     profileImageUrl: '',
@@ -29,5 +29,5 @@ const initPost: PostType = {
   createdAt: '',
   updatedAt: '',
 }
-const post = postsStore.posts.find((post: PostType) => post.id == id) || initPost
+const post = posts.find((post: PostType) => post.id == id) || initPost
 </script>
