@@ -23,7 +23,9 @@ const CategoryFinderComponent = useSelectableTextInput(categoriesStore.categorie
 const router = useRouter()
 
 function filterCategories(): void {
-  const queryStrings = createQueryStrings(selectedCategoryIds.value, 'id')
+  const queryStrings = createQueryStrings({
+    id: selectedCategoryIds.value,
+  })
 
   router
     .push({

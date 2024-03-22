@@ -56,11 +56,13 @@ const UserFinderComponent = useSelectableTextInput(users, 'nickname')
 const router = useRouter()
 
 async function filterPosts(): Promise<void> {
-  let queryStrings = createQueryStrings(selectedCategoryId.value, 'categoryId')
-  queryStrings = createQueryStrings(selectedSubCategoryId.value, 'subCategoryId', queryStrings)
-  queryStrings = createQueryStrings(selectedTagIds.value, 'tagId', queryStrings)
-  queryStrings = createQueryStrings(selectedConditionIds.value, 'conditionId', queryStrings)
-  queryStrings = createQueryStrings(selectedUserId.value, 'userId', queryStrings)
+  const queryStrings = createQueryStrings({
+    categoryId: selectedCategoryId.value,
+    subCategoryId: selectedSubCategoryId.value,
+    tagId: selectedTagIds.value,
+    conditionId: selectedConditionIds.value,
+    userId: selectedUserId.value,
+  })
 
   router
     .push({
