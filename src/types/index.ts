@@ -48,11 +48,6 @@ export type UserType = {
   posts: PostType[]
 }
 
-export type PostImageType = {
-  imageUrl: string
-  orderNo: number
-}
-
 export type PostType = {
   id?: number
   title: string
@@ -65,4 +60,35 @@ export type PostType = {
   postImages: PostImageType[]
   createdAt: string
   updatedAt: string
+  tagIds?: string[]
+  conditionIds?: string[]
+  userId: number
+}
+
+export type PostTagType = {
+  postId?: number
+  tagId: number
+}
+
+export type PostConditionType = {
+  postId?: number
+  conditionId: number
+}
+
+type PostImageType = {
+  postId?: number
+  image: Blob
+  orderNo: number
+}
+
+export type PostFormType = {
+  id?: number
+  title: string
+  body: string
+  categoryId: number
+  subCategoryId: number
+  //userId: number
+  postTagsAttributes: PostTagType[]
+  postConditionsAttributes: PostConditionType[]
+  postImages: PostImageType[]
 }

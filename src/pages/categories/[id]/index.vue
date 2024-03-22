@@ -13,13 +13,11 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const id = parseInt(route.params.id as string)
 
-const { categoriesStore } = useCategoriesStore()
+const { categories } = useCategoriesStore()
 const initCategory: CategoryType = {
   name: '',
   orderNo: 0,
   subCategories: [],
 }
-const category = computed(
-  () => categoriesStore.categories.find((category: CategoryType) => category.id == id) || initCategory
-)
+const category = computed(() => categories.find((category: CategoryType) => category.id == id) || initCategory)
 </script>

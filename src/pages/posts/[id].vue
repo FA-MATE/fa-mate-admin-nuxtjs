@@ -11,23 +11,10 @@ import { usePostsStore } from '~/stores/post'
 const route = useRoute()
 const id = route.params.id
 
-const { posts } = usePostsStore()
-const initPost: PostType = {
-  title: '',
-  body: '',
-  categoryId: 0,
-  subCategoryId: 0,
-  user: {
-    nickname: 'test',
-    profileImageUrl: '',
-    conditions: [],
-    posts: [],
-  },
-  tags: [],
-  conditions: [],
-  postImages: [],
-  createdAt: '',
-  updatedAt: '',
-}
-const post = posts.find((post: PostType) => post.id == id) || initPost
+const postsStore = usePostsStore()
+
+const post =
+  id !== 'new' && postsStore.posts.length == 0
+    ? await postsStore.getPost(id)
+    : postsStore.posts.find((post: PostType) => post.id?.toString() == id)
 </script>

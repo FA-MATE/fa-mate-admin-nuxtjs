@@ -38,13 +38,12 @@ export function mapToQueryString(hash: any): string {
 }
 
 export function createQueryStrings(
-  by: Record<string, string[]> | Record<string, undefined> = {}
-): Record<string, string[]> {
-  const to: Record<string, string[]> = {}
+  by: Record<string, number | string | string[] | undefined> = {}
+): Record<string, number | string | string[]> {
+  const to: Record<string, number | string | string[]> = {}
   Object.keys(by).forEach((key) => {
-    if ((by[key] || []).length > 0) {
-      to[key] = by[key] as string[]
-    }
+    const value = by[key]
+    if (value !== undefined) to[key] = value
   })
 
   return to

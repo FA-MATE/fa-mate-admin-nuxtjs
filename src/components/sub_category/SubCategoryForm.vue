@@ -30,14 +30,14 @@ import type { SubCategoryType } from '~/types'
 import { useCategoriesStore } from '~/stores/category'
 import InputTextField from '~/components/ui-part/form/InputTextField.vue'
 import Button from '~/components/ui-part/form/Button.vue'
-import { useSingleSelectableTextInput } from '~/composable/useSingleSelectableTextInput'
+import { useSelectableTextInput } from '~/composable/useSelectableTextInput'
 
 const { postSubCategory, putSubCategory, deleteSubCategory } = useCategoriesStore()
 
-const categoriesStore = useCategoriesStore()
 const subCategory = defineModel<SubCategoryType>({ required: true })
 
-const CategoryFinderComponent = useSingleSelectableTextInput(categoriesStore.categories, 'name')
+const categoriesStore = useCategoriesStore()
+const CategoryFinderComponent = useSelectableTextInput(categoriesStore.categories, 'name')
 
 async function handlePostSubCategory(): Promise<void> {
   if (!confirm('新規追加しますか？')) return

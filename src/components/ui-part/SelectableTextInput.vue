@@ -27,7 +27,7 @@
               @mouseout="inputTextCloseableTrue"
             >
               <DismissibleButton
-                v-for="selectedItem in selectedItemsByIds()"
+                v-for="selectedItem in selectedItemsByIds"
                 :key="selectedItem.id"
                 :label="selectedItem[nameColumn]"
                 :item="selectedItem"
@@ -56,7 +56,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import DismissibleButton from './DismissibleButton.vue'
 import SelectableListNode from './SelectableListNode.vue'
 
@@ -64,8 +64,6 @@ const searchKeyword = ref('')
 const isInputOpen = ref(false)
 const isInputCloseable = ref(false)
 const inputRef = ref<HTMLInputElement>()
-
-const selectedItemIds = defineModel<string[]>()
 
 const props = defineProps<{
   filteredItems: any[]
@@ -80,6 +78,8 @@ const emits = defineEmits<{
   changedItemSelectState: [selectedItem: Ref, e: Event, item: any]
   dismissItem: [selectedItem: Ref, item: any]
 }>()
+
+const selectedItemIds = defineModel<T>()
 
 function searchByKeyword(): void {
   emits('searchByKeyword', searchKeyword.value)
@@ -132,14 +132,22 @@ const inputTextCloseableTrue = (): void => {
 }
 
 const isSelectedItem = (item: any): boolean => {
-  if (selectedItemIds.value === undefined || selectedItemIds.value.length === 0) return false
+  if (selectedItemIds.value === undefined) return false
 
-  return selectedItemIds.value.find((selectedItemId: string) => selectedItemId === item.id.toString()) != undefined
+  if (Array.isArray(selectedItemIds.value) && selectedItemIds.value.length >= 0) {
+    return selectedItemIds.value.find((selectedItemId: string) => selectedItemId === item.id.toString()) != undefined
+  }
+
+  return selectedItemIds?.value?.toString() === item.id.toString()
 }
 
-function selectedItemsByIds(): any[] {
-  if (selectedItemIds.value === undefined || selectedItemIds.value.length === 0) return []
+const selectedItemsByIds = computed(() => {
+  if (selectedItemIds.value === undefined) return []
 
-  return selectedItemIds.value.map((id) => props.items.find((item: any) => id === item.id.toString()))
-}
+  if (Array.isArray(selectedItemIds.value) && selectedItemIds.value.length >= 0) {
+    return selectedItemIds.value.map((id) => props.items.find((item: any) => id === item.id.toString()))
+  }
+
+  return props.items.filter((item: any) => selectedItemIds?.value?.toString() === item.id.toString())
+})
 </script>

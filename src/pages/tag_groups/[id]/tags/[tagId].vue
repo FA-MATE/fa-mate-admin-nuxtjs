@@ -10,9 +10,7 @@ const route = useRoute()
 const id = route.params.tagId
 const tagGroupId = route.params.id
 
-const {
-  tagGroupsStore: { tagGroups },
-} = useTagsStore()
+const { tagGroups } = useTagsStore()
 const tagGroup = tagGroups.find((tagGroup: TagGroupType) => tagGroup.id == tagGroupId)
 
 const initTag: TagType = {
