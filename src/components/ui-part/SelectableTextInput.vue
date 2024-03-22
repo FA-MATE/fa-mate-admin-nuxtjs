@@ -27,7 +27,7 @@
               @mouseout="inputTextCloseableTrue"
             >
               <DismissibleButton
-                v-for="selectedItem in selectedItemsByIds(selectedItemIds)"
+                v-for="selectedItem in selectedItemsByIds()"
                 :key="selectedItem.id"
                 :label="selectedItem[nameColumn]"
                 :item="selectedItem"
@@ -65,7 +65,7 @@ const isInputOpen = ref(false)
 const isInputCloseable = ref(false)
 const inputRef = ref<HTMLInputElement>()
 
-const selectedItemIds = defineModel<string | string[]>()
+const selectedItemIds = defineModel<string[]>()
 
 const props = defineProps<{
   filteredItems: any[]
@@ -132,16 +132,14 @@ const inputTextCloseableTrue = (): void => {
 }
 
 const isSelectedItem = (item: any): boolean => {
-  if (selectedItemIds.value === undefined || selectedItemIds.value === '') return false
+  if (selectedItemIds.value === undefined || selectedItemIds.value.length === 0) return false
 
-  return (
-    [selectedItemIds.value].flat().find((selectedItemId: string) => selectedItemId === item.id.toString()) != undefined
-  )
+  return selectedItemIds.value.find((selectedItemId: string) => selectedItemId === item.id.toString()) != undefined
 }
 
-function selectedItemsByIds(selectedItemIds: string | string[] | undefined): any[] {
-  if (selectedItemIds === undefined || selectedItemIds === '') return []
+function selectedItemsByIds(): any[] {
+  if (selectedItemIds.value === undefined || selectedItemIds.value.length === 0) return []
 
-  return [selectedItemIds].flat().map((id) => props.items.find((item: any) => id === item.id.toString()))
+  return selectedItemIds.value.map((id) => props.items.find((item: any) => id === item.id.toString()))
 }
 </script>

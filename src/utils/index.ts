@@ -38,11 +38,13 @@ export function mapToQueryString(hash: any): string {
 }
 
 export function createQueryStrings(
-  queryValue: string | undefined,
+  queryValues: string[] | undefined,
   queryStringKey: string,
-  queryStrings: any = {}
-): any {
-  if (queryValue !== undefined && queryValue !== '') queryStrings[queryStringKey] = queryValue
+  queryStrings: Record<string, string | string[]> = {}
+): Record<string, string | string[]> {
+  if (queryValues !== undefined && queryValues.length > 0) {
+    queryStrings[queryStringKey] = queryValues
+  }
 
   return queryStrings
 }

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSingleSelectableTextInput } from '~/composable/useSingleSelectableTextInput'
+import { useSelectableTextInput } from '~/composable/useSelectableTextInput'
 import { useCategoriesStore } from '~/stores/category'
 import Button from '~/components/ui-part/form/Button.vue'
 import { useRouter } from 'vue-router'
@@ -20,47 +20,46 @@ import { useTagsStore } from '~/stores/tag'
 import { useConditionsStore } from '~/stores/condition'
 import { useUsersStore } from '~/stores/user'
 import { createQueryStrings } from '~/utils'
-import { useMultiSelectableTextInput } from '~/composable/useMultiSelectableTextInput'
 
 const props = defineProps<{
-  categoryId?: string
-  subCategoryId?: string
+  categoryIds?: string[]
+  subCategoryIds?: string[]
   tagIds?: string[]
   conditionIds?: string[]
-  userId?: string
+  userIds?: string[]
 }>()
 
 // カテゴリ
 const { categories, subCategories } = useCategoriesStore()
-const selectedCategoryId = ref(props.categoryId)
-const CategoryFinderComponent = useSingleSelectableTextInput(categories, 'name')
+const selectedCategoryId = ref(props.categoryIds || [])
+const CategoryFinderComponent = useSelectableTextInput(categories, 'name')
 
 // サブカテゴリ
-const selectedSubCategoryId = ref(props.subCategoryId)
-const SubCategoryFinderComponent = useSingleSelectableTextInput(subCategories, 'name')
+const selectedSubCategoryId = ref(props.subCategoryIds || [])
+const SubCategoryFinderComponent = useSelectableTextInput(subCategories, 'name')
 
 // タグ
 const { tags } = useTagsStore()
 const selectedTagIds = ref(props.tagIds || [])
-const TagFinderComponent = useMultiSelectableTextInput(tags, 'name')
+const TagFinderComponent = useSelectableTextInput(tags, 'name', { uniqueColumn: 'tagGroupId' })
 
 // お譲り条件
 const { conditions } = useConditionsStore()
 const selectedConditionIds = ref(props.conditionIds || [])
-const ConditionFinderComponent = useMultiSelectableTextInput(conditions, 'name')
+const ConditionFinderComponent = useSelectableTextInput(conditions, 'name', { uniqueColumn: 'conditionGroupId' })
 
 // ユーザ
 const { users } = useUsersStore()
-const selectedUserId = ref(props.userId)
-const UserFinderComponent = useSingleSelectableTextInput(users, 'nickname')
+const selectedUserId = ref(props.userIds || [])
+const UserFinderComponent = useSelectableTextInput(users, 'nickname')
 
 const router = useRouter()
 
 async function filterPosts(): Promise<void> {
   let queryStrings = createQueryStrings(selectedCategoryId.value, 'categoryId')
   queryStrings = createQueryStrings(selectedSubCategoryId.value, 'subCategoryId', queryStrings)
-  queryStrings = createQueryStrings(selectedTagIds.value.join(','), 'tagIds', queryStrings)
-  queryStrings = createQueryStrings(selectedConditionIds.value.join(','), 'conditionIds', queryStrings)
+  queryStrings = createQueryStrings(selectedTagIds.value, 'tagId', queryStrings)
+  queryStrings = createQueryStrings(selectedConditionIds.value, 'conditionId', queryStrings)
   queryStrings = createQueryStrings(selectedUserId.value, 'userId', queryStrings)
 
   router
